@@ -344,20 +344,21 @@
       margin-bottom: 28px;
     }
 
-    /* Quote rotator */
+    /* Quote rotator — fixed height so layout never shifts */
     .quote-rotator {
       position: relative;
-      min-height: 80px;
-      margin-bottom: 36px;
+      height: 132px;
+      margin-bottom: 44px;
     }
     .quote-item {
       position: absolute;
       top: 0; left: 0;
+      width: 100%;
       opacity: 0;
       transition: opacity 0.9s ease;
-      width: 100%;
+      pointer-events: none;
     }
-    .quote-item.active { opacity: 1; position: relative; }
+    .quote-item.active { opacity: 1; pointer-events: auto; }
 
     .quote-motto {
       font-size: clamp(1.5rem, 2.2vw, 2rem);
@@ -413,8 +414,10 @@
     .hero-right {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       position: relative;
+      padding-top: 16px;
+      padding-bottom: 80px; /* room for dots + tag */
     }
 
     .hero-carousel {
@@ -464,7 +467,7 @@
 
     .carousel-dots {
       position: absolute;
-      bottom: -28px;
+      bottom: -36px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -1014,12 +1017,15 @@
     }
 
     /* ============================================================
-       FOOTER
+       FOOTER — always dark, never inverted by theme
     ============================================================ */
     footer {
-      background: var(--text);
-      color: var(--bg);
+      background: #111111;
+      color: #F5F0E8;
       padding: 52px 0 34px;
+    }
+    [data-theme="dark"] footer {
+      background: #07101f;
     }
     .footer-inner {
       max-width: 1120px;
@@ -1087,6 +1093,106 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
     /* ============================================================
+       SPOTIFY POPUP
+    ============================================================ */
+    .spotify-popup {
+      position: fixed;
+      left: 90px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-8px);
+      width: 300px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(1.8);
+      -webkit-backdrop-filter: blur(22px) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: var(--glass-shadow);
+      overflow: hidden;
+      z-index: 199;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .spotify-popup.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0);
+    }
+    .sp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px 8px;
+    }
+    .sp-label {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .sp-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1;
+      padding: 2px 4px;
+      transition: color var(--transition);
+    }
+    .sp-close:hover { color: var(--text); }
+    .spotify-popup iframe {
+      display: block;
+      width: 100%;
+      height: 152px;
+      border: none;
+      pointer-events: auto;
+    }
+
+    /* Music button — same style as theme toggle */
+    .fn-music {
+      background: none;
+      border: 1.5px solid var(--border-bold);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .fn-music:hover { background: var(--tag-bg); }
+    .fn-music svg { width: 14px; height: 14px; fill: currentColor; }
+    .fn-music.playing { border-color: var(--text); background: var(--tag-bg); }
+
+    /* Footer easter egg */
+    .footer-star-trigger {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer; /* only hint is cursor change */
+      padding: 4px;
+    }
+    .footer-star-trigger .footer-star {
+      transition: opacity 0.3s;
+    }
+    .footer-star-trigger.activated .footer-star {
+      opacity: 0.7;
+    }
+    .footer-easter-text {
+      font-size: 0.82rem;
+      color: rgba(245,240,232,0.5);
+      font-family: 'Raleway', sans-serif;
+      font-style: italic;
+      transition: opacity 0.6s ease;
+      min-height: 1.2em;
+    }
+
+    /* ============================================================
        RESPONSIVE
     ============================================================ */
     @media (max-width: 960px) {
@@ -1133,7 +1239,28 @@
     <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
     <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
   </button>
+  <button class="fn-music" id="musicToggle" aria-label="Toggle music">
+    <!-- Music note icon -->
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </button>
 </nav>
+
+<!-- SPOTIFY POPUP -->
+<div class="spotify-popup" id="spotifyPopup">
+  <div class="sp-header">
+    <span class="sp-label">Now Playing</span>
+    <button class="sp-close" id="spotifyClose" aria-label="Close player">✕</button>
+  </div>
+  <iframe
+    id="spotifyIframe"
+    src=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"
+    title="Spotify Player">
+  </iframe>
+</div>
 
 <!-- MOBILE NAV FALLBACK -->
 <nav id="mobile-nav" aria-label="Mobile navigation">
@@ -1518,6 +1645,7 @@
           <li class="skill-item">Tableau</li>
           <li class="skill-item">Streamlit</li>
           <li class="skill-item">Matplotlib / Seaborn / Plotly</li>
+          <li class="skill-item">Pandas (Notebook Analysis)</li>
           <li class="skill-item">Excel (Charting &amp; Analysis)</li>
         </ul>
       </div>
@@ -1528,7 +1656,7 @@
           <li class="skill-item">Microsoft SQL Server</li>
           <li class="skill-item">Azure Databricks</li>
           <li class="skill-item">Google Cloud Platform (GCP)</li>
-          <li class="skill-item">Pandas / NumPy / SciPy</li>
+          <li class="skill-item">NumPy / SciPy</li>
         </ul>
       </div>
 
@@ -1689,7 +1817,8 @@
     <div class="footer-top">
       <div>
         <div class="footer-name">Nicholas Dale</div>
-        <p class="footer-motto script">Ipsa scientia potestas est</p>
+        <p class="footer-motto script" id="footerMotto">Ipsa scientia potestas est</p>
+        <p class="footer-easter-text" id="footerEaster" style="display:none;"></p>
       </div>
       <div class="footer-links">
         <a href="https://linkedin.com/in/equinox013" target="_blank" rel="noopener" class="footer-link">
@@ -1709,7 +1838,7 @@
     <hr class="footer-divider" />
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Nicholas Dale. All rights reserved.</span>
-      <div style="display:flex;gap:8px;align-items:center;">
+      <div class="footer-star-trigger" id="easterTrigger" aria-label="✦">
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
@@ -1723,6 +1852,81 @@
      JAVASCRIPT
 ============================================================ -->
 <script>
+  /* ---------- Spotify player ---------- */
+  const SPOTIFY_SRC = 'https://open.spotify.com/embed/playlist/37i9dQZF1FwPnI2WdkZqpZ?utm_source=generator&theme=0';
+  const musicBtn    = document.getElementById('musicToggle');
+  const spotifyPop  = document.getElementById('spotifyPopup');
+  const spotifyIf   = document.getElementById('spotifyIframe');
+  const spotifyClose= document.getElementById('spotifyClose');
+  let spotifyLoaded = false;
+  let spotifyOpen   = false;
+
+  function toggleSpotify() {
+    spotifyOpen = !spotifyOpen;
+    spotifyPop.classList.toggle('open', spotifyOpen);
+    musicBtn.classList.toggle('playing', spotifyOpen);
+    if (spotifyOpen && !spotifyLoaded) {
+      spotifyIf.src = SPOTIFY_SRC;
+      spotifyLoaded = true;
+    }
+  }
+
+  musicBtn.addEventListener('click', toggleSpotify);
+  spotifyClose.addEventListener('click', () => {
+    spotifyOpen = false;
+    spotifyPop.classList.remove('open');
+    musicBtn.classList.remove('playing');
+  });
+
+  /* ---------- Footer easter egg ---------- */
+  const funFacts = [
+    "I currently hold a Physical & Mental First Aid Certificate.",
+    "CALD and bilingual — English and Bahasa Indonesia.",
+    "Known for dry humour, dedication, and grounded positivity.",
+    "Coffee order: latte, one sugar. Ol' reliable.",
+    "RSA certified. Also holds a barista certificate.",
+    "Love Live forever ♡  全速前進～ ヨーソロー！",
+    "不愉快です...",
+    "suichan wa kyou mou kawaii!"
+  ];
+
+  const easterTrigger = document.getElementById('easterTrigger');
+  const footerMotto   = document.getElementById('footerMotto');
+  const footerEaster  = document.getElementById('footerEaster');
+  let easterActive    = false;
+  let easterIdx       = 0;
+  let easterTimer;
+
+  function showFact(idx) {
+    footerEaster.style.opacity = '0';
+    setTimeout(() => {
+      footerEaster.textContent = funFacts[idx];
+      footerEaster.style.opacity = '1';
+    }, 400);
+  }
+
+  easterTrigger.addEventListener('click', () => {
+    if (!easterActive) {
+      easterActive = true;
+      easterTrigger.classList.add('activated');
+      footerMotto.style.display = 'none';
+      footerEaster.style.display = 'block';
+      easterIdx = 0;
+      showFact(easterIdx);
+      easterTimer = setInterval(() => {
+        easterIdx = (easterIdx + 1) % funFacts.length;
+        showFact(easterIdx);
+      }, 60000);
+    } else {
+      // Clicking again deactivates it
+      easterActive = false;
+      easterTrigger.classList.remove('activated');
+      clearInterval(easterTimer);
+      footerEaster.style.display = 'none';
+      footerMotto.style.display = '';
+    }
+  });
+
   /* ---------- Right-click / drag protection ---------- */
   document.addEventListener('contextmenu', e => {
     if (e.target.tagName === 'IMG') e.preventDefault();
