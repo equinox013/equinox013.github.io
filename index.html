@@ -165,6 +165,7 @@
       flex-direction: column;
       align-items: center;
       gap: 18px;
+      overflow: visible;
       transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
     }
 
@@ -316,8 +317,8 @@
     }
 
     .hero-logo {
-      width: 52px;
-      height: 52px;
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       margin-bottom: 18px;
       pointer-events: auto;
@@ -1093,14 +1094,14 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
     /* ============================================================
-       SPOTIFY POPUP
+       SPOTIFY POPUP — anchored below the glass pill
     ============================================================ */
     .spotify-popup {
-      position: fixed;
-      left: 90px;
-      top: 50%;
-      transform: translateY(-50%) translateX(-8px);
-      width: 300px;
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 10px);
+      transform: translateX(-50%) translateY(-6px);
+      width: 310px;
       background: var(--glass-bg);
       backdrop-filter: blur(22px) saturate(1.8);
       -webkit-backdrop-filter: blur(22px) saturate(1.8);
@@ -1116,7 +1117,7 @@
     .spotify-popup.open {
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(-50%) translateX(0);
+      transform: translateX(-50%) translateY(0);
     }
     .sp-header {
       display: flex;
@@ -1146,7 +1147,7 @@
     .spotify-popup iframe {
       display: block;
       width: 100%;
-      height: 152px;
+      height: 200px;
       border: none;
       pointer-events: auto;
     }
@@ -1245,22 +1246,22 @@
       <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
   </button>
-</nav>
 
-<!-- SPOTIFY POPUP -->
-<div class="spotify-popup" id="spotifyPopup">
-  <div class="sp-header">
-    <span class="sp-label">Now Playing</span>
-    <button class="sp-close" id="spotifyClose" aria-label="Close player">✕</button>
+  <!-- SPOTIFY POPUP — lives inside pill so it anchors below naturally -->
+  <div class="spotify-popup" id="spotifyPopup">
+    <div class="sp-header">
+      <span class="sp-label">Now Playing</span>
+      <button class="sp-close" id="spotifyClose" aria-label="Close player">✕</button>
+    </div>
+    <iframe
+      id="spotifyIframe"
+      src=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      title="Spotify Player">
+    </iframe>
   </div>
-  <iframe
-    id="spotifyIframe"
-    src=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy"
-    title="Spotify Player">
-  </iframe>
-</div>
+</nav>
 
 <!-- MOBILE NAV FALLBACK -->
 <nav id="mobile-nav" aria-label="Mobile navigation">
@@ -1916,7 +1917,7 @@
       easterTimer = setInterval(() => {
         easterIdx = (easterIdx + 1) % funFacts.length;
         showFact(easterIdx);
-      }, 60000);
+      }, 15000);
     } else {
       // Clicking again deactivates it
       easterActive = false;
