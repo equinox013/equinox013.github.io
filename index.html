@@ -5,70 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nicholas Dale — Certified Data Wizard</title>
   <meta name="description" content="Nicholas Dale — Data Scientist & Analyst. Building data-driven solutions across healthcare, utilities, and beyond." />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Great+Vibes&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================================
-       DESIGN TOKENS
+       TOKENS
     ============================================================ */
     :root {
-      --bg:          #F5F0E8;
-      --bg-card:     #EDE7DB;
-      --bg-subtle:   #E5DDD0;
-      --text:        #1A1A1A;
-      --text-muted:  #4A4A4A;
-      --accent:      #1A1A1A;
-      --border:      rgba(26,26,26,0.15);
-      --border-bold: #1A1A1A;
-      --star-fill:   #1A1A1A;
-      --tag-bg:      rgba(26,26,26,0.08);
-      --iframe-bg:   #f0ebe2;
-      --shadow:      0 4px 24px rgba(26,26,26,0.08);
-      --shadow-hover:0 8px 40px rgba(26,26,26,0.14);
-      --nav-bg:      rgba(245,240,232,0.92);
-      --transition:  0.3s cubic-bezier(0.4,0,0.2,1);
+      --bg:           #F5F0E8;
+      --bg-card:      #EDE7DB;
+      --bg-subtle:    #E5DDD0;
+      --text:         #1A1A1A;
+      --text-muted:   #555;
+      --border:       rgba(26,26,26,0.13);
+      --border-bold:  #1A1A1A;
+      --star-fill:    #1A1A1A;
+      --tag-bg:       rgba(26,26,26,0.07);
+      --iframe-bg:    #ede8df;
+      --shadow:       0 4px 24px rgba(26,26,26,0.07);
+      --shadow-hover: 0 10px 40px rgba(26,26,26,0.13);
+      --nav-bg:       rgba(245,240,232,0.55);
+      --nav-border:   rgba(26,26,26,0.12);
+      --transition:   0.3s cubic-bezier(0.4,0,0.2,1);
+
+      /* Glass pill */
+      --glass-bg:     rgba(255,255,255,0.45);
+      --glass-border: rgba(26,26,26,0.1);
+      --glass-shadow: 0 8px 40px rgba(26,26,26,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
     [data-theme="dark"] {
-      --bg:          #0D1A38;
-      --bg-card:     #1A2B5F;
-      --bg-subtle:   #152249;
-      --text:        #F5F0E8;
-      --text-muted:  #A8B4D0;
-      --accent:      #F5F0E8;
-      --border:      rgba(245,240,232,0.12);
-      --border-bold: rgba(245,240,232,0.6);
-      --star-fill:   #F5F0E8;
-      --tag-bg:      rgba(245,240,232,0.1);
-      --iframe-bg:   #1A2B5F;
-      --shadow:      0 4px 24px rgba(0,0,0,0.3);
-      --shadow-hover:0 8px 40px rgba(0,0,0,0.45);
-      --nav-bg:      rgba(13,26,56,0.94);
+      --bg:           #0D1A38;
+      --bg-card:      #1A2B5F;
+      --bg-subtle:    #122045;
+      --text:         #F5F0E8;
+      --text-muted:   #96A8C8;
+      --border:       rgba(245,240,232,0.1);
+      --border-bold:  rgba(245,240,232,0.55);
+      --star-fill:    #F5F0E8;
+      --tag-bg:       rgba(245,240,232,0.08);
+      --iframe-bg:    #1A2B5F;
+      --shadow:       0 4px 24px rgba(0,0,0,0.3);
+      --shadow-hover: 0 10px 40px rgba(0,0,0,0.45);
+      --nav-bg:       rgba(13,26,56,0.6);
+      --nav-border:   rgba(245,240,232,0.1);
+
+      --glass-bg:     rgba(13,26,56,0.6);
+      --glass-border: rgba(245,240,232,0.12);
+      --glass-shadow: 0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
     /* ============================================================
-       RESET & BASE
+       RESET
     ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Raleway', sans-serif;
       font-weight: 400;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.7;
-      transition: background-color var(--transition), color var(--transition);
+      transition: background var(--transition), color var(--transition);
       overflow-x: hidden;
     }
-
     a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
+    img {
+      display: block;
+      max-width: 100%;
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-user-select: none;
+      user-select: none;
+      pointer-events: none; /* blocks right-click on images */
+    }
+    /* Re-enable pointer for links wrapping images */
+    a img { pointer-events: auto; }
 
     /* ============================================================
        TYPOGRAPHY
@@ -79,11 +93,12 @@
       letter-spacing: -0.02em;
       line-height: 1.1;
     }
+    .script { font-family: 'Great Vibes', cursive; font-weight: 400; }
 
     .section-label {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -91,52 +106,33 @@
       align-items: center;
       gap: 10px;
     }
-
     .section-label::before {
       content: '';
       display: inline-block;
-      width: 28px;
+      width: 26px;
       height: 1px;
       background: var(--text-muted);
     }
 
-    .script {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 400;
-    }
-
     /* ============================================================
-       4-POINT STAR SVG
+       STAR SVG UTIL
     ============================================================ */
+    .star-icon { width: 18px; height: 18px; fill: var(--star-fill); opacity: 0.7; flex-shrink: 0; }
+    .star-sm   { width: 11px; height: 11px; fill: var(--star-fill); opacity: 0.5; flex-shrink: 0; }
+
     .star-divider {
       display: flex;
       align-items: center;
       gap: 16px;
       margin: 12px 0;
     }
-
     .star-divider::before,
     .star-divider::after {
       content: '';
       flex: 1;
       height: 1px;
       background: var(--border-bold);
-      opacity: 0.3;
-    }
-
-    .star-icon {
-      width: 18px;
-      height: 18px;
-      fill: var(--star-fill);
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    .star-sm {
-      width: 12px;
-      height: 12px;
-      fill: var(--star-fill);
-      opacity: 0.5;
+      opacity: 0.25;
     }
 
     /* ============================================================
@@ -147,113 +143,157 @@
       margin: 0 auto;
       padding: 0 32px;
     }
-
-    section {
-      padding: 96px 0;
-    }
-
-    section:first-of-type {
-      padding-top: 0;
-    }
+    section { padding: 96px 0; }
 
     /* ============================================================
-       NAVIGATION
+       FLOATING GLASS PILL NAV  (desktop ≥ 1300px)
     ============================================================ */
-    nav {
+    #float-nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition), border-color var(--transition);
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(1.8);
+      -webkit-backdrop-filter: blur(22px) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      border-radius: 48px;
+      padding: 22px 14px;
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
     }
 
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 32px;
-      height: 64px;
+    .fn-logo {
+      width: 34px;
+      height: 34px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .fn-logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      pointer-events: auto;
+    }
+    [data-theme="dark"] .fn-logo img { filter: invert(1) brightness(0.88); }
+
+    .fn-sep {
+      width: 28px;
+      height: 1px;
+      background: var(--border-bold);
+      opacity: 0.2;
+      flex-shrink: 0;
     }
 
-    .nav-logo {
+    .fn-links {
+      list-style: none;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 4px;
+    }
+
+    .fn-links a {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-    }
-
-    .nav-logo img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      filter: var(--logo-filter, none);
-    }
-
-    [data-theme="dark"] .nav-logo img {
-      filter: invert(1) brightness(0.9);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
-      transition: color var(--transition);
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+      display: block;
+    }
+    .fn-links a:hover,
+    .fn-links a.active {
+      color: var(--text);
+      background: var(--tag-bg);
     }
 
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    /* Theme toggle */
-    .theme-toggle {
+    .fn-toggle {
       background: none;
       border: 1.5px solid var(--border-bold);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--text);
-      transition: background var(--transition), border-color var(--transition), transform 0.2s;
+      transition: background var(--transition), transform 0.25s;
     }
+    .fn-toggle:hover { background: var(--tag-bg); transform: rotate(18deg); }
+    .fn-toggle svg { width: 14px; height: 14px; fill: currentColor; }
 
-    .theme-toggle:hover {
-      background: var(--tag-bg);
-      transform: rotate(15deg);
-    }
-
-    .theme-toggle svg { width: 16px; height: 16px; fill: currentColor; }
-
-    .icon-sun { display: block; }
+    .icon-sun  { display: block; }
     .icon-moon { display: none; }
-    [data-theme="dark"] .icon-sun { display: none; }
+    [data-theme="dark"] .icon-sun  { display: none; }
     [data-theme="dark"] .icon-moon { display: block; }
+
+    /* MOBILE NAV fallback (< 1300px) */
+    #mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+    .mn-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mn-logo img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      pointer-events: auto;
+    }
+    [data-theme="dark"] .mn-logo img { filter: invert(1) brightness(0.88); }
+
+    .mn-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+    }
+    .mn-links a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .mn-links a:hover { color: var(--text); }
+
+    /* Responsive nav switch */
+    @media (max-width: 1299px) {
+      #float-nav  { display: none; }
+      #mobile-nav { display: block; }
+    }
+    @media (min-width: 1300px) {
+      #float-nav  { display: flex; }
+      #mobile-nav { display: none; }
+    }
 
     /* ============================================================
        HERO
@@ -275,76 +315,101 @@
       width: 100%;
     }
 
-    .hero-left {}
-
-    .hero-eyebrow {
-      margin-bottom: 20px;
+    .hero-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      margin-bottom: 18px;
+      pointer-events: auto;
     }
+    [data-theme="dark"] .hero-logo { filter: invert(1) brightness(0.88); }
 
     .hero-name {
-      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: -0.03em;
-      line-height: 0.95;
-      margin-bottom: 20px;
+      line-height: 0.93;
+      margin: 10px 0 18px;
     }
-
-    .hero-name span {
-      display: block;
-    }
+    .hero-name span { display: block; }
 
     .hero-title {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-bottom: 28px;
     }
 
-    .hero-motto {
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    /* Quote rotator */
+    .quote-rotator {
+      position: relative;
+      min-height: 80px;
+      margin-bottom: 36px;
+    }
+    .quote-item {
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      width: 100%;
+    }
+    .quote-item.active { opacity: 1; position: relative; }
+
+    .quote-motto {
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
       color: var(--text-muted);
-      margin-bottom: 40px;
       font-style: italic;
     }
 
-    .hero-motto em {
-      font-style: normal;
+    .quote-testimonial blockquote {
+      font-size: 0.94rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.75;
+      border-left: 2px solid var(--border-bold);
+      padding-left: 16px;
+      opacity: 0.85;
+    }
+    .quote-testimonial cite {
+      display: block;
+      margin-top: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-left: 16px;
     }
 
     .hero-socials {
       display: flex;
-      gap: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
       align-items: center;
     }
-
     .social-btn {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       border: 1.5px solid var(--border-bold);
-      padding: 10px 20px;
+      padding: 9px 18px;
       font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 0.75rem;
+      font-weight: 700;
+      font-size: 0.72rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border-radius: 4px;
       transition: background var(--transition), color var(--transition), transform 0.2s;
     }
+    .social-btn:hover { background: var(--text); color: var(--bg); transform: translateY(-2px); }
+    .social-btn svg { width: 14px; height: 14px; fill: currentColor; }
 
-    .social-btn:hover {
-      background: var(--text);
-      color: var(--bg);
-      transform: translateY(-2px);
-    }
-
-    .social-btn svg { width: 15px; height: 15px; fill: currentColor; }
-
-    /* Hero right — photo */
+    /* Hero photo carousel */
     .hero-right {
       display: flex;
       justify-content: center;
@@ -352,92 +417,121 @@
       position: relative;
     }
 
-    .hero-photo-wrap {
+    .hero-carousel {
       position: relative;
-      width: 380px;
+      width: 360px;
       max-width: 100%;
     }
 
-    .hero-photo-wrap::before {
+    .hero-carousel::before {
       content: '';
       position: absolute;
-      inset: 12px -12px -12px 12px;
+      inset: 14px -14px -14px 14px;
       border: 1.5px solid var(--border-bold);
       border-radius: 2px;
-      opacity: 0.4;
+      opacity: 0.35;
       z-index: 0;
-      transition: opacity var(--transition);
+      pointer-events: none;
     }
 
-    .hero-photo {
+    .carousel-track {
+      position: relative;
       width: 100%;
       aspect-ratio: 3/4;
+      border-radius: 2px;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .carousel-slide.active { opacity: 1; }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: top center;
-      border-radius: 2px;
-      position: relative;
-      z-index: 1;
-      clip-path: polygon(0 0, 100% 0, 100% 92%, 96% 100%, 4% 100%, 0 92%);
-      filter: grayscale(15%) contrast(1.05);
+      clip-path: polygon(0 0, 100% 0, 100% 93%, 96% 100%, 4% 100%, 0 93%);
+      filter: grayscale(10%) contrast(1.05);
       transition: filter var(--transition);
     }
+    [data-theme="dark"] .carousel-slide img { filter: grayscale(20%) contrast(1.1) brightness(0.82); }
 
-    [data-theme="dark"] .hero-photo {
-      filter: grayscale(20%) contrast(1.1) brightness(0.85);
-    }
-
-    .hero-photo-tag {
+    .carousel-dots {
       position: absolute;
-      bottom: -20px;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border-bold);
+      opacity: 0.25;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .carousel-dot.active { opacity: 0.9; transform: scale(1.4); }
+
+    .carousel-tag {
+      position: absolute;
+      bottom: -52px;
       right: -16px;
       background: var(--bg-card);
       border: 1.5px solid var(--border-bold);
-      padding: 10px 16px;
+      padding: 9px 14px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       z-index: 2;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      transition: background var(--transition), border-color var(--transition);
     }
 
     .hero-star-bg {
       position: absolute;
-      opacity: 0.04;
-      top: 10%;
-      right: -5%;
-      width: 300px;
-      height: 300px;
+      opacity: 0.03;
+      top: 8%; right: -4%;
+      width: 280px; height: 280px;
       fill: var(--text);
       pointer-events: none;
     }
 
-    /* Scroll indicator */
     .scroll-hint {
       position: absolute;
-      bottom: 40px;
+      bottom: 36px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-family: 'Poppins', sans-serif;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
-      animation: bounce 2s ease-in-out infinite;
+      animation: nudge 2.2s ease-in-out infinite;
     }
-
-    .scroll-hint svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
-
-    @keyframes bounce {
+    .scroll-hint svg { width: 15px; height: 15px; stroke: currentColor; fill: none; }
+    @keyframes nudge {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
+      55%       { transform: translateX(-50%) translateY(7px); }
     }
 
     /* ============================================================
@@ -447,71 +541,51 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 80px;
       align-items: start;
     }
 
     .about-text h2 {
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
       text-transform: uppercase;
-      margin: 16px 0 24px;
+      margin: 14px 0 22px;
     }
-
     .about-text p {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--text-muted);
-      margin-bottom: 20px;
-      font-weight: 400;
-      line-height: 1.8;
+      margin-bottom: 18px;
+      line-height: 1.85;
     }
-
-    .about-text p strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
+    .about-text p strong { color: var(--text); font-weight: 600; }
     .about-text .motto-line {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       color: var(--text);
-      margin-top: 32px;
+      margin-top: 28px;
       border-top: 1px solid var(--border);
-      padding-top: 24px;
+      padding-top: 22px;
     }
 
-    .about-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+    .about-stats { display: flex; flex-direction: column; gap: 20px; }
 
     .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      padding: 24px;
+      padding: 22px;
       border-radius: 2px;
       transition: background var(--transition), box-shadow var(--transition);
     }
-
     .stat-card:hover { box-shadow: var(--shadow); }
-
     .stat-number {
       font-family: 'Poppins', sans-serif;
       font-weight: 900;
-      font-size: 2.4rem;
+      font-size: 2.3rem;
       line-height: 1;
       margin-bottom: 4px;
     }
-
-    .stat-label {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
 
     .cert-badge {
-      margin-top: 8px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -519,73 +593,60 @@
       padding: 8px 14px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       border-radius: 2px;
+      margin-top: 4px;
     }
 
     /* ============================================================
        PROJECTS
     ============================================================ */
-    #projects {}
-
     .projects-header {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       margin-bottom: 48px;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 20px;
     }
-
     .projects-header h2 {
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
       text-transform: uppercase;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
-    /* Tab switcher */
     .tab-bar {
       display: flex;
-      gap: 0;
       border: 1.5px solid var(--border-bold);
       border-radius: 4px;
       overflow: hidden;
     }
-
     .tab-btn {
       background: none;
       border: none;
-      padding: 10px 24px;
+      padding: 10px 22px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
       cursor: pointer;
       transition: background var(--transition), color var(--transition);
-      position: relative;
     }
+    .tab-btn:not(:last-child) { border-right: 1.5px solid var(--border-bold); }
+    .tab-btn.active { background: var(--text); color: var(--bg); }
 
-    .tab-btn:not(:last-child) {
-      border-right: 1.5px solid var(--border-bold);
-    }
-
-    .tab-btn.active {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    /* DS project cards */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
+    /* DS grid */
     .ds-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      gap: 28px;
     }
 
     .project-card {
@@ -593,47 +654,34 @@
       border: 1px solid var(--border);
       border-radius: 2px;
       overflow: hidden;
-      transition: box-shadow var(--transition), border-color var(--transition), transform 0.2s;
+      transition: box-shadow var(--transition), transform 0.22s;
     }
-
-    .project-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-4px);
-    }
+    .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
 
     .project-card-header {
-      padding: 24px 24px 16px;
+      padding: 22px 22px 14px;
       border-bottom: 1px solid var(--border);
     }
-
     .project-card-header h3 {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
       margin-bottom: 6px;
     }
-
     .project-hook {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
       margin-bottom: 12px;
     }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
     .tag {
       background: var(--tag-bg);
       border: 1px solid var(--border);
-      padding: 3px 10px;
+      padding: 3px 9px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       border-radius: 2px;
@@ -643,16 +691,10 @@
     .project-iframe-wrap {
       position: relative;
       width: 100%;
-      height: 500px;
+      height: 480px;
       background: var(--iframe-bg);
     }
-
-    .project-iframe-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
+    .project-iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
 
     .iframe-overlay {
       position: absolute;
@@ -661,31 +703,27 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       background: var(--iframe-bg);
       cursor: pointer;
       transition: opacity 0.3s;
     }
-
     .iframe-overlay.hidden { opacity: 0; pointer-events: none; }
-
-    .iframe-overlay svg { width: 40px; height: 40px; fill: var(--text-muted); }
-
+    .iframe-overlay svg { width: 36px; height: 36px; fill: var(--text-muted); }
     .iframe-overlay p {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
-
-    .iframe-overlay .load-btn {
+    .load-btn {
       border: 1.5px solid var(--border-bold);
-      padding: 9px 22px;
+      padding: 8px 20px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       background: none;
@@ -694,116 +732,87 @@
       border-radius: 2px;
       transition: background 0.2s, color 0.2s;
     }
+    .load-btn:hover { background: var(--text); color: var(--bg); }
 
-    .iframe-overlay .load-btn:hover {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    /* Warning badge for mental health */
     .project-warning {
       background: var(--tag-bg);
       border-left: 3px solid var(--border-bold);
       padding: 10px 14px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
-      margin: 0 24px 16px;
-      font-style: italic;
+      margin: 0 22px 14px;
       line-height: 1.5;
     }
 
-    /* DA project cards */
-    .da-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 28px;
-    }
+    /* DA grid */
+    .da-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
 
     .da-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 2px;
-      padding: 32px;
+      padding: 30px;
       display: grid;
-      grid-template-columns: 1fr 2.5fr;
-      gap: 32px;
+      grid-template-columns: 160px 1fr;
+      gap: 30px;
       align-items: start;
-      transition: box-shadow var(--transition), transform 0.2s;
+      transition: box-shadow var(--transition), transform 0.22s;
     }
-
-    .da-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-3px);
-    }
-
-    .da-card-meta {}
+    .da-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
 
     .da-card-meta .company {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .da-card-meta .period {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .da-card-meta .impact-number {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 900;
-      font-size: 2rem;
-      line-height: 1;
       margin-bottom: 4px;
     }
-
-    .da-card-meta .impact-label {
+    .da-card-meta .period {
+      font-family: 'Poppins', sans-serif;
       font-size: 0.75rem;
       color: var(--text-muted);
+      margin-bottom: 14px;
     }
+    .impact-number {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
+      font-size: 2.1rem;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .impact-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 14px; }
 
     .da-card-body h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-
     .da-card-body p {
-      font-size: 0.9rem;
+      font-size: 0.87rem;
       color: var(--text-muted);
       line-height: 1.8;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
+    .da-card-body p:last-child { margin-bottom: 0; }
 
-    /* Tableau card — has link */
     .tableau-link {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       border: 1.5px solid var(--border-bold);
-      padding: 8px 18px;
+      padding: 7px 16px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border-radius: 2px;
       transition: background 0.2s, color 0.2s, transform 0.2s;
     }
-
-    .tableau-link:hover {
-      background: var(--text);
-      color: var(--bg);
-      transform: translateY(-2px);
-    }
-
-    .tableau-link svg { width: 13px; height: 13px; fill: currentColor; }
+    .tableau-link:hover { background: var(--text); color: var(--bg); transform: translateY(-2px); }
+    .tableau-link svg { width: 12px; height: 12px; fill: currentColor; }
 
     /* ============================================================
        SKILLS
@@ -811,97 +820,82 @@
     #skills { background: var(--bg-subtle); transition: background var(--transition); }
 
     .skills-header h2 {
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
       text-transform: uppercase;
-      margin: 16px 0 48px;
+      margin: 14px 0 44px;
     }
 
-    .skills-groups {
+    .skills-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 20px;
     }
 
     .skill-group {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 2px;
-      padding: 28px;
+      padding: 24px;
       transition: box-shadow var(--transition);
     }
-
     .skill-group:hover { box-shadow: var(--shadow); }
+    .skill-group.full   { grid-column: 1 / -1; }
+    .skill-group.span-2 { grid-column: span 2; }
 
     .skill-group-title {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
-
-    .skill-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .skill-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.9rem;
+      gap: 9px;
+      font-size: 0.88rem;
       font-weight: 500;
     }
-
     .skill-item::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 5px; height: 5px;
       background: var(--text);
       border-radius: 50%;
+      opacity: 0.35;
       flex-shrink: 0;
-      opacity: 0.4;
     }
 
+    /* Cert row */
     .skill-cert {
       grid-column: 1 / -1;
       background: var(--bg-card);
       border: 1.5px solid var(--border-bold);
       border-radius: 2px;
-      padding: 24px 28px;
+      padding: 22px 26px;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
     }
-
-    .cert-icon { width: 40px; height: 40px; flex-shrink: 0; fill: var(--text); opacity: 0.7; }
-
-    .cert-info {}
+    .cert-icon { width: 36px; height: 36px; flex-shrink: 0; fill: var(--text); opacity: 0.65; }
     .cert-info strong {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 0.82rem;
-      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       display: block;
       margin-bottom: 2px;
     }
-    .cert-info span {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    .cert-info span { font-size: 0.78rem; color: var(--text-muted); }
 
     /* ============================================================
        EXPERIENCE & EDUCATION
     ============================================================ */
-    #experience {}
-
     .exp-edu-grid {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -909,165 +903,110 @@
       align-items: start;
     }
 
-    .exp-col h2,
-    .edu-col h2 {
-      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+    .exp-col h2, .edu-col h2 {
+      font-size: clamp(1.8rem, 2.4vw, 2.3rem);
       text-transform: uppercase;
-      margin: 16px 0 40px;
+      margin: 14px 0 36px;
     }
 
-    /* Timeline */
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-    }
-
+    .timeline { position: relative; padding-left: 26px; }
     .timeline::before {
       content: '';
       position: absolute;
-      left: 6px;
-      top: 8px;
-      bottom: 0;
+      left: 5px; top: 8px; bottom: 0;
       width: 1px;
       background: var(--border-bold);
-      opacity: 0.25;
+      opacity: 0.22;
     }
 
-    .timeline-item {
-      position: relative;
-      margin-bottom: 40px;
-    }
-
+    .timeline-item { position: relative; margin-bottom: 36px; }
     .timeline-item:last-child { margin-bottom: 0; }
 
     .timeline-dot {
       position: absolute;
-      left: -28px;
-      top: 8px;
-      width: 13px;
-      height: 13px;
+      left: -26px; top: 7px;
+      width: 11px; height: 11px;
       fill: var(--text);
     }
-
     .timeline-period {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
-
     .timeline-role {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 0.96rem;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
       margin-bottom: 2px;
     }
-
     .timeline-company {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
       font-weight: 500;
+      margin-bottom: 8px;
     }
-
-    .timeline-desc {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .timeline-desc ul {
-      padding-left: 16px;
-      margin-top: 6px;
-    }
-
-    .timeline-desc ul li {
-      margin-bottom: 4px;
-    }
+    .timeline-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.72; }
 
     .clinical-block {
-      margin-top: 8px;
-      padding: 14px 18px;
+      margin-top: 10px;
+      padding: 12px 16px;
       border: 1px solid var(--border);
       border-radius: 2px;
       background: var(--bg-subtle);
     }
-
-    .clinical-block .cb-title {
+    .cb-title {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 8px;
       color: var(--text-muted);
+      margin-bottom: 8px;
     }
-
-    .clinical-roles {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
+    .clinical-roles { display: flex; flex-direction: column; gap: 4px; }
     .clinical-role-item {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       display: flex;
       align-items: baseline;
       gap: 6px;
     }
-
-    .clinical-role-item::before {
-      content: '·';
-      font-weight: 700;
-    }
+    .clinical-role-item::before { content: '·'; font-weight: 700; }
 
     /* Education */
-    .edu-item {
-      margin-bottom: 28px;
-    }
-
+    .edu-item { margin-bottom: 26px; }
     .edu-item:last-child { margin-bottom: 0; }
-
     .edu-degree {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
       margin-bottom: 2px;
     }
-
-    .edu-school {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      margin-bottom: 2px;
-    }
-
+    .edu-school { font-size: 0.84rem; color: var(--text-muted); font-weight: 500; margin-bottom: 2px; }
     .edu-period {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
-
     .edu-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 4px;
+      gap: 5px;
+      margin-top: 5px;
       background: var(--tag-bg);
-      padding: 3px 10px;
+      padding: 3px 9px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -1080,169 +1019,138 @@
     footer {
       background: var(--text);
       color: var(--bg);
-      padding: 56px 0 36px;
+      padding: 52px 0 34px;
     }
-
     .footer-inner {
       max-width: 1120px;
       margin: 0 auto;
       padding: 0 32px;
     }
-
     .footer-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 20px;
     }
-
     .footer-name {
       font-family: 'Poppins', sans-serif;
       font-weight: 900;
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       text-transform: uppercase;
       letter-spacing: -0.02em;
-      color: var(--bg);
     }
+    .footer-motto { font-size: 1.3rem; color: rgba(245,240,232,0.45); }
 
-    .footer-motto {
-      font-size: 1.4rem;
-      color: rgba(245,240,232,0.5);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
+    .footer-links { display: flex; gap: 12px; flex-wrap: wrap; }
     .footer-link {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border: 1.5px solid rgba(245,240,232,0.35);
-      padding: 9px 18px;
+      gap: 7px;
+      border: 1.5px solid rgba(245,240,232,0.3);
+      padding: 8px 16px;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--bg);
       border-radius: 2px;
       transition: background 0.2s, border-color 0.2s;
     }
+    .footer-link:hover { background: rgba(245,240,232,0.1); border-color: rgba(245,240,232,0.65); }
+    .footer-link svg { width: 13px; height: 13px; fill: currentColor; }
 
-    .footer-link:hover {
-      background: rgba(245,240,232,0.1);
-      border-color: rgba(245,240,232,0.7);
-    }
-
-    .footer-link svg { width: 14px; height: 14px; fill: currentColor; }
-
-    .footer-divider {
+    hr.footer-divider {
       border: none;
-      border-top: 1px solid rgba(245,240,232,0.15);
-      margin: 0 0 24px;
+      border-top: 1px solid rgba(245,240,232,0.12);
+      margin: 0 0 22px;
     }
-
     .footer-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-copy {
-      font-size: 0.78rem;
-      color: rgba(245,240,232,0.4);
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .footer-star-row {
-      display: flex;
-      align-items: center;
       gap: 10px;
     }
-
-    .footer-star { width: 14px; height: 14px; fill: rgba(245,240,232,0.4); }
+    .footer-copy { font-size: 0.75rem; color: rgba(245,240,232,0.35); font-family: 'Poppins', sans-serif; }
+    .footer-star { width: 12px; height: 12px; fill: rgba(245,240,232,0.3); }
 
     /* ============================================================
-       SCROLL REVEAL
+       REVEAL
     ============================================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
 
     /* ============================================================
        RESPONSIVE
     ============================================================ */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero-right { order: -1; }
-      .hero-photo-wrap { width: 260px; }
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .skills-groups { grid-template-columns: 1fr 1fr; }
-      .exp-edu-grid { grid-template-columns: 1fr; gap: 56px; }
+      .hero-carousel { width: 260px; }
+      .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid .skill-group.full,
+      .skills-grid .skill-group.span-2 { grid-column: 1 / -1; }
+      .exp-edu-grid { grid-template-columns: 1fr; gap: 52px; }
       .ds-grid { grid-template-columns: 1fr; }
-      .da-card { grid-template-columns: 1fr; gap: 16px; }
-      .nav-links { display: none; }
+      .da-card { grid-template-columns: 1fr; gap: 14px; }
+      .mn-links { display: none; }
     }
-
     @media (max-width: 600px) {
-      .container { padding: 0 20px; }
+      .container { padding: 0 18px; }
       section { padding: 72px 0; }
-      .skills-groups { grid-template-columns: 1fr; }
-      .hero-name { font-size: 2.6rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 2.8rem; }
       .projects-header { flex-direction: column; align-items: flex-start; }
       .footer-top { flex-direction: column; }
     }
   </style>
 </head>
-
 <body>
 
 <!-- ============================================================
-     NAVIGATION
+     FLOATING GLASS PILL NAV
 ============================================================ -->
-<nav id="main-nav">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">
-      <img src="assets/logo.png" alt="Nicholas Dale logo" />
-      <span>Nicholas Dale</span>
+<nav id="float-nav" aria-label="Site navigation">
+  <a href="#hero" class="fn-logo" aria-label="Home">
+    <img src="assets/logo.png" alt="Nicholas Dale" />
+  </a>
+  <div class="fn-sep"></div>
+  <ul class="fn-links">
+    <li><a href="#about"      data-section="about">About</a></li>
+    <li><a href="#projects"   data-section="projects">Work</a></li>
+    <li><a href="#skills"     data-section="skills">Stack</a></li>
+    <li><a href="#experience" data-section="experience">Story</a></li>
+  </ul>
+  <div class="fn-sep"></div>
+  <button class="fn-toggle" id="themeToggleFloat" aria-label="Toggle dark mode">
+    <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+  </button>
+</nav>
+
+<!-- MOBILE NAV FALLBACK -->
+<nav id="mobile-nav" aria-label="Mobile navigation">
+  <div class="mn-inner">
+    <a href="#hero" class="mn-logo" aria-label="Home">
+      <img src="assets/logo.png" alt="Nicholas Dale" />
     </a>
-    <ul class="nav-links">
+    <ul class="mn-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#skills">Stack</a></li>
+      <li><a href="#experience">Story</a></li>
     </ul>
-    <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <!-- Sun -->
-        <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
-        </svg>
-        <!-- Moon -->
-        <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-        </svg>
-      </button>
-    </div>
+    <button class="fn-toggle" id="themeToggleMobile" aria-label="Toggle dark mode" style="margin-left:auto;">
+      <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -1253,14 +1161,39 @@
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
+
       <div class="hero-left">
-        <div class="hero-eyebrow section-label">Data Scientist &amp; Analyst</div>
+        <img src="assets/logo.png" alt="Nicholas Dale" class="hero-logo" />
+        <div class="section-label">Data Scientist &amp; Analyst</div>
         <h1 class="hero-name">
           <span>Nicholas</span>
           <span>Dale</span>
         </h1>
-        <p class="hero-title">Certified Data Wizard &nbsp;·&nbsp; Microsoft PL-300 &nbsp;·&nbsp; Melbourne, AU</p>
-        <p class="hero-motto script">Ipsa scientia potestas est</p>
+        <p class="hero-title">Certified Data Wizard &nbsp;·&nbsp; Melbourne, AU</p>
+
+        <!-- Quote / testimonial rotator -->
+        <div class="quote-rotator" id="quoteRotator">
+          <div class="quote-item quote-motto active">
+            <span class="script quote-motto-text">Ipsa scientia potestas est</span>
+          </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"His communication with stakeholders is crisp and he works collaboratively — not just with the immediate team but with broader stakeholders as well."</blockquote>
+            <cite>— Analytics Manager, St John of God Health Care</cite>
+          </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"I often found myself in awe by the high standard and efficiency of his work. There has never been a dull day working with Nicholas."</blockquote>
+            <cite>— Former Colleague</cite>
+          </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"His energy fills the room with positivity. Hard work, dedication — always makes sure to go over and above."</blockquote>
+            <cite>— Former Colleague</cite>
+          </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"What took me 5 hours to make, the dashboard now makes within seconds."</blockquote>
+            <cite>— Product Owner, South East Water</cite>
+          </div>
+        </div>
+
         <div class="hero-socials">
           <a href="https://linkedin.com/in/equinox013" target="_blank" rel="noopener" class="social-btn">
             <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -1278,23 +1211,40 @@
       </div>
 
       <div class="hero-right">
-        <!-- Large decorative star bg -->
         <svg class="hero-star-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <path d="M50 0 L56 44 L100 50 L56 56 L50 100 L44 56 L0 50 L44 44 Z"/>
         </svg>
 
-        <div class="hero-photo-wrap">
-          <img src="assets/profile.jpg" alt="Nicholas Dale" class="hero-photo" />
-          <div class="hero-photo-tag">
+        <div class="hero-carousel">
+          <div class="carousel-track">
+            <div class="carousel-slide active">
+              <img src="assets/profile.jpg" alt="Nicholas Dale" />
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/profile2.jpg" alt="Nicholas Dale" />
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/profile3.jpg" alt="Nicholas Dale" />
+            </div>
+          </div>
+
+          <div class="carousel-dots">
+            <button class="carousel-dot active" data-slide="0" aria-label="Photo 1"></button>
+            <button class="carousel-dot"        data-slide="1" aria-label="Photo 2"></button>
+            <button class="carousel-dot"        data-slide="2" aria-label="Photo 3"></button>
+          </div>
+
+          <div class="carousel-tag">
             <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
             Certified Data Wizard
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <div class="scroll-hint">
+  <div class="scroll-hint" aria-hidden="true">
     <span>Scroll</span>
     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="6 9 12 15 18 9"/>
@@ -1312,17 +1262,12 @@
       <div class="about-text reveal">
         <div class="section-label">About</div>
         <h2>Clinical Roots.<br/>Computational Edge.</h2>
-
         <div class="star-divider">
           <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         </div>
-
-        <p>Nicholas Dale is a certified data professional shaped by one rare combination: <strong>clinical empathy and computational precision.</strong> Starting out in healthcare — as a nursing student and disability support worker — he pivoted to data with a clear conviction: that the best analyses don't just inform, they move people toward better decisions.</p>
-
-        <p>Across regulated industries — <strong>healthcare, utilities, automotive</strong> — he has translated complex, messy data into insights that actually get used. His work spans end-to-end pipeline automation, deep learning NLP, executive-level Power BI governance, and machine learning model deployment, always anchored to the people those systems serve.</p>
-
-        <p>Currently advancing a <strong>Master of Digital Health</strong>, he sits at the intersection where clinical domain knowledge meets modern data infrastructure — a combination that remains rare, and quietly powerful.</p>
-
+        <p>Nicholas Dale is a certified data professional shaped by one rare combination: <strong>clinical empathy and computational precision.</strong> Starting out in healthcare — as a nursing student and disability support worker — he pivoted to data with a clear conviction: the best analyses don't just inform, they move people toward better decisions.</p>
+        <p>Across regulated industries — <strong>healthcare, utilities, automotive</strong> — he translates complex, messy data into insights that actually get used. His work spans end-to-end pipeline automation, deep learning NLP, executive-level Power BI governance, and production ML deployments — always anchored to the people those systems serve.</p>
+        <p>Currently advancing a <strong>Master of Digital Health</strong>, he works at the intersection where clinical domain knowledge meets modern data infrastructure — a combination that remains rare, and quietly powerful.</p>
         <p class="motto-line script">Ipsa scientia potestas est — knowledge itself is power.</p>
       </div>
 
@@ -1333,15 +1278,15 @@
         </div>
         <div class="stat-card">
           <div class="stat-number">4</div>
-          <div class="stat-label">Live ML/AI Models deployed on HuggingFace Spaces</div>
+          <div class="stat-label">Live ML/AI models deployed on HuggingFace Spaces</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">80%</div>
-          <div class="stat-label">Reporting efficiency gain — SEW CX Dashboard (verbatim stakeholder feedback)</div>
+          <div class="stat-label">Reporting efficiency gain — SEW CX Dashboard (direct stakeholder feedback)</div>
         </div>
         <div class="cert-badge">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L9.5 8.5H2L8 13l-2.5 7.5L12 16.5l6.5 4L16 13l6-4.5h-7.5z"/></svg>
-          Microsoft Certified · Power BI Data Analyst Associate (PL-300)
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L9.5 8.5H2L8 13l-2.5 7.5L12 16.5l6.5 4L16 13l6-4.5h-7.5z"/></svg>
+          Microsoft Certified · Power BI Data Analyst Associate
         </div>
       </div>
     </div>
@@ -1361,31 +1306,23 @@
       </div>
       <div class="tab-bar">
         <button class="tab-btn active" data-tab="ds">
-          <svg class="star-sm" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;margin-right:6px"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
+          <svg class="star-sm" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle;margin-right:5px;"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
           Data Science
         </button>
-        <button class="tab-btn" data-tab="da">
-          Data Analytics
-        </button>
+        <button class="tab-btn" data-tab="da">Data Analytics</button>
       </div>
     </div>
 
-    <!-- ---- DATA SCIENCE TAB ---- -->
+    <!-- DATA SCIENCE -->
     <div class="tab-panel active" id="panel-ds">
       <div class="ds-grid">
 
-        <!-- Card 1: Housing -->
         <div class="project-card reveal">
           <div class="project-card-header">
             <h3>Melbourne Housing Price Predictor</h3>
-            <p class="project-hook">Estimates residential property sale prices across Melbourne suburbs using geospatial distance, property attributes, and a Random Forest model trained on ~34,000 real transactions — giving buyers and agents an objective price anchor.</p>
+            <p class="project-hook">Estimates residential sale prices across Melbourne suburbs using geospatial distance from the CBD, property attributes, and a Random Forest pipeline trained on ~34,000 real transactions — giving buyers and agents an objective price anchor.</p>
             <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">Scikit-learn</span>
-              <span class="tag">Random Forest</span>
-              <span class="tag">Streamlit</span>
-              <span class="tag">Geospatial</span>
-              <span class="tag">HuggingFace</span>
+              <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Geospatial</span><span class="tag">Streamlit</span><span class="tag">HuggingFace</span>
             </div>
           </div>
           <div class="project-iframe-wrap">
@@ -1394,22 +1331,16 @@
               <p>Interactive Demo</p>
               <button class="load-btn" onclick="loadIframe('housing')">Launch Model</button>
             </div>
-            <iframe id="iframe-housing" src="" title="Melbourne Housing Price Predictor" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+            <iframe id="iframe-housing" src="" title="Melbourne Housing Price Predictor" loading="lazy"></iframe>
           </div>
         </div>
 
-        <!-- Card 2: Waste -->
         <div class="project-card reveal reveal-delay-1">
           <div class="project-card-header">
             <h3>Smart Waste Classifier</h3>
-            <p class="project-hook">Upload any photo of a household item and the model — a fine-tuned MobileNetV2 achieving 92% test accuracy — classifies it into one of ten waste categories and tells you exactly how to dispose of it.</p>
+            <p class="project-hook">Upload any photo of a household item. A fine-tuned MobileNetV2 (92% test accuracy) classifies it across 10 waste categories and returns disposal guidance — making recycling decisions unambiguous.</p>
             <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">TensorFlow</span>
-              <span class="tag">MobileNetV2</span>
-              <span class="tag">Transfer Learning</span>
-              <span class="tag">Streamlit</span>
-              <span class="tag">HuggingFace</span>
+              <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">MobileNetV2</span><span class="tag">Transfer Learning</span><span class="tag">Streamlit</span><span class="tag">HuggingFace</span>
             </div>
           </div>
           <div class="project-iframe-wrap">
@@ -1418,51 +1349,35 @@
               <p>Interactive Demo</p>
               <button class="load-btn" onclick="loadIframe('waste')">Launch Model</button>
             </div>
-            <iframe id="iframe-waste" src="" title="Smart Waste Classifier" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+            <iframe id="iframe-waste" src="" title="Smart Waste Classifier" loading="lazy"></iframe>
           </div>
         </div>
 
-        <!-- Card 3: Mental Health -->
         <div class="project-card reveal reveal-delay-2">
           <div class="project-card-header">
             <h3>Mental Health Text Classifier</h3>
-            <p class="project-hook">A custom Transformer encoder — built from scratch in PyTorch, no pre-trained backbone — that classifies free text across seven mental health categories. Macro F1 of 0.70 and ROC-AUC of 0.956 on held-out test data.</p>
+            <p class="project-hook">A custom Transformer encoder — built from scratch in PyTorch with no pre-trained backbone — classifying free text across 7 mental health categories. Macro F1: 0.70 · ROC-AUC: 0.956 on held-out test data.</p>
             <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">PyTorch</span>
-              <span class="tag">Transformer</span>
-              <span class="tag">NLP</span>
-              <span class="tag">Streamlit</span>
-              <span class="tag">HuggingFace</span>
+              <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Transformer</span><span class="tag">NLP</span><span class="tag">Streamlit</span><span class="tag">HuggingFace</span>
             </div>
           </div>
-          <div class="project-warning">
-            ⚠ Research &amp; portfolio demo only — not a diagnostic tool. If you are in crisis, please contact a mental health professional or crisis line.
-          </div>
+          <div class="project-warning">⚠ Research &amp; portfolio demo only — not a diagnostic tool. If you are in crisis, please contact a mental health professional.</div>
           <div class="project-iframe-wrap">
             <div class="iframe-overlay" id="overlay-mental">
               <svg viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
               <p>Interactive Demo</p>
               <button class="load-btn" onclick="loadIframe('mental')">Launch Model</button>
             </div>
-            <iframe id="iframe-mental" src="" title="Mental Health Text Classifier" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+            <iframe id="iframe-mental" src="" title="Mental Health Text Classifier" loading="lazy"></iframe>
           </div>
         </div>
 
-        <!-- Card 4: HIKARI -->
         <div class="project-card reveal reveal-delay-3">
           <div class="project-card-header">
             <h3>HIKARI · HIMARI · MACHI</h3>
-            <p class="project-hook">A production-grade three-stage NLP pipeline for utility sector CX analytics: MACHI scrubs PII from raw verbatims, HIMARI normalises and tokenises, HIKARI (BiLSTM + GloVe) multi-label classifies complaints into 10 driver categories — with a 0.5-adjustable confidence threshold.</p>
+            <p class="project-hook">A production-grade 3-stage NLP pipeline for utility sector CX: MACHI strips PII from raw verbatims, HIMARI normalises and tokenises, HIKARI (BiLSTM + GloVe) multi-label classifies complaints into 10 driver categories with an adjustable confidence threshold.</p>
             <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">Keras</span>
-              <span class="tag">BiLSTM</span>
-              <span class="tag">GloVe</span>
-              <span class="tag">CRF</span>
-              <span class="tag">NLP</span>
-              <span class="tag">PII Scrubbing</span>
-              <span class="tag">HuggingFace</span>
+              <span class="tag">Python</span><span class="tag">Keras</span><span class="tag">BiLSTM</span><span class="tag">GloVe</span><span class="tag">CRF</span><span class="tag">PII Scrubbing</span><span class="tag">HuggingFace</span>
             </div>
           </div>
           <div class="project-iframe-wrap">
@@ -1471,41 +1386,34 @@
               <p>Interactive Demo</p>
               <button class="load-btn" onclick="loadIframe('hikari')">Launch Model</button>
             </div>
-            <iframe id="iframe-hikari" src="" title="HIKARI Complaint Driver Classifier" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+            <iframe id="iframe-hikari" src="" title="HIKARI Complaint Driver Classifier" loading="lazy"></iframe>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- ---- DATA ANALYTICS TAB ---- -->
+    <!-- DATA ANALYTICS -->
     <div class="tab-panel" id="panel-da">
       <div class="da-grid">
 
-        <!-- Power BI 1: Complaints -->
         <div class="da-card reveal">
           <div class="da-card-meta">
             <div class="company">South East Water</div>
-            <div class="period">Jan 2025 – Sep 2025</div>
+            <div class="period">Jan – Sep 2025</div>
             <div class="impact-number">70%</div>
             <div class="impact-label">Reporting efficiency gain</div>
             <div class="tag-row" style="margin-top:12px;">
-              <span class="tag">Power BI</span>
-              <span class="tag">SQL Server</span>
-              <span class="tag">Salesforce</span>
-              <span class="tag">Power Query</span>
-              <span class="tag">DAX</span>
+              <span class="tag">Power BI</span><span class="tag">SQL Server</span><span class="tag">Salesforce</span><span class="tag">DAX</span>
             </div>
           </div>
           <div class="da-card-body">
             <h3>Complaints Reporting &amp; Performance Management Dashboard</h3>
-            <p>Led the reporting stream of the <strong>Complaints Management Uplift Project</strong> — a business-critical initiative to revamp how complaints are captured, managed, resolved, and recorded across the organisation. The challenge: replace a manual, error-prone reporting process with a scalable, insight-rich solution that could serve both frontline teams and executive leadership simultaneously.</p>
-            <p>The delivered dashboard operates across two integrated sections: a <strong>Reporting section</strong> that superseded manual complaint volume calculations and KPI tracking (now auto-generated via Power Query and DAX for board-level reports) and a <strong>Performance section</strong> that leveraged a new Salesforce deployment to surface emerging complaint themes, cost-to-resolve metrics, and SLA timeliness — giving product owners the tools to act on trends before they escalate.</p>
-            <p>Collaborated extensively with product owners, product managers, Salesforce developers, and data engineers throughout delivery.</p>
+            <p>Led the reporting stream of the <strong>Complaints Management Uplift Project</strong> — replacing a manual, error-prone reporting methodology with a two-section Power BI dashboard. The <strong>Reporting section</strong> auto-generates complaint volumes, KPIs, and board-level graphs via Power Query and DAX measures. The <strong>Performance section</strong> leveraged a new Salesforce deployment to surface complaint themes, cost-to-resolve, and SLA timeliness for product owners and executives.</p>
+            <p>Delivered through close collaboration with product owners, product managers, Salesforce developers, and data engineers — improving reporting efficiency by 70% and enabling data-driven decision-making at every level of the business.</p>
           </div>
         </div>
 
-        <!-- Power BI 2: Financial Recovery -->
         <div class="da-card reveal reveal-delay-1">
           <div class="da-card-meta">
             <div class="company">South East Water</div>
@@ -1513,62 +1421,51 @@
             <div class="impact-number">80%</div>
             <div class="impact-label">Financial reporting efficiency gain</div>
             <div class="tag-row" style="margin-top:12px;">
-              <span class="tag">Power BI</span>
-              <span class="tag">SQL Server</span>
-              <span class="tag">DAX</span>
-              <span class="tag">Power Query</span>
+              <span class="tag">Power BI</span><span class="tag">SQL Server</span><span class="tag">DAX</span><span class="tag">Power Query</span>
             </div>
           </div>
           <div class="da-card-body">
             <h3>Financial Recovery Reporting Dashboard Suite</h3>
-            <p>Collaborated with a cross-functional team of reporting analysts and BI developers to deliver a three-dashboard suite providing a <strong>novel view into the business's debt and vulnerability space</strong>. The suite enabled the Customer Solutions department to track payments and debt for customers with aged debt, and to measure the effectiveness of their Debt and Vulnerability Strategy rollout in real time.</p>
-            <p>Stakeholder impact was direct and measurable — one product owner described it as: <em>"What took me 5 hours to make, the dashboard now makes within seconds."</em> The suite empowered teams to identify whether escalated recovery activities were resulting in reduced rolled-over debt, among a broad range of other strategic insights.</p>
+            <p>Collaborated with reporting analysts and BI developers to deliver a three-dashboard suite providing novel visibility into the business's debt and vulnerability space. Enabled the Customer Solutions team to track payments, aged debt, and the real-time effectiveness of their Debt and Vulnerability Strategy rollout.</p>
+            <p><em>"What took me 5 hours to make, the dashboard now makes within seconds."</em> — Product Owner, South East Water</p>
           </div>
         </div>
 
-        <!-- Power BI 3: Stellantis -->
         <div class="da-card reveal reveal-delay-2">
           <div class="da-card-meta">
             <div class="company">Stellantis ANZ</div>
-            <div class="period">Jun 2024 – Sep 2024</div>
+            <div class="period">Jun – Sep 2024</div>
             <div class="impact-number">35%</div>
             <div class="impact-label">Manual reporting time saved</div>
             <div class="tag-row" style="margin-top:12px;">
-              <span class="tag">Power BI</span>
-              <span class="tag">Power Query</span>
-              <span class="tag">Excel / VBA</span>
-              <span class="tag">DAX</span>
+              <span class="tag">Power BI</span><span class="tag">Power Query</span><span class="tag">Excel / VBA</span><span class="tag">DAX</span>
             </div>
           </div>
           <div class="da-card-body">
             <h3>Aftersales Reporting Suite for Dealerships &amp; BDMs</h3>
-            <p>Built a <strong>paginated Power BI report</strong> for the Stellantis dealership network (Fiat, Alfa Romeo, Jeep, and more) surfacing NPS scores, service experience performance, positive/negative review volumes, and employee training compliance per dealership. Delivered alongside an internal warehouse dashboard displaying stock descriptions, quantities, make/model breakdown, and sales history for materials management.</p>
-            <p>Delivered daily KPI reports to 50+ national managers and automated key ETL workflows using Power Query, cutting preparation time by 40% across the Aftersales function.</p>
+            <p>Built a paginated Power BI report for the Stellantis dealership network (Fiat, Alfa Romeo, Jeep) surfacing NPS scores, service experience breakdowns, review volumes, and employee training compliance per dealership. Delivered alongside an internal warehouse dashboard for stock and sales history. Daily KPI reports served 50+ national managers; ETL automation cut preparation time by 40%.</p>
           </div>
         </div>
 
-        <!-- Tableau -->
         <div class="da-card reveal reveal-delay-3">
           <div class="da-card-meta">
             <div class="company">Personal Project</div>
             <div class="period">2024</div>
             <div class="tag-row" style="margin-top:12px;">
-              <span class="tag">Tableau</span>
-              <span class="tag">Data Viz</span>
-              <span class="tag">Analytics</span>
+              <span class="tag">Tableau</span><span class="tag">Data Viz</span><span class="tag">Analytics</span>
             </div>
           </div>
           <div class="da-card-body">
             <h3>Hololive VTuber Performance Analytics</h3>
-            <p>A two-dashboard Tableau Public project analysing <strong>individual and overall performance metrics</strong> for Hololive VTubers — subscriber growth, view velocity, stream frequency, and cross-talent comparisons. Built as a personal exploration of public API data and interactive Tableau design.</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+            <p>Two-dashboard Tableau Public project analysing individual and overall performance metrics for Hololive VTubers — subscriber growth, view velocity, stream frequency, and cross-talent comparisons. A personal exploration of public data with a focus on interactive Tableau design.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
               <a href="https://public.tableau.com/app/profile/nicholas.dale/viz/HololiveStats-IndividualPerformance/Dashboard2" target="_blank" rel="noopener" class="tableau-link">
                 <svg viewBox="0 0 24 24"><path d="M11 17H7v-2h4v-4h2v4h4v2h-4v4h-2v-4zM4 4h16v2H4V4zm0 14h3v2H4v-2zm13 0h3v2h-3v-2zM4 9h2v6H4V9zm14 0h2v6h-2V9z"/></svg>
-                Individual View
+                Individual
               </a>
               <a href="https://public.tableau.com/app/profile/nicholas.dale/viz/HololiveStats-OverallView/Dashboard1" target="_blank" rel="noopener" class="tableau-link">
                 <svg viewBox="0 0 24 24"><path d="M11 17H7v-2h4v-4h2v4h4v2h-4v4h-2v-4zM4 4h16v2H4V4zm0 14h3v2H4v-2zm13 0h3v2h-3v-2zM4 9h2v6H4V9zm14 0h2v6h-2V9z"/></svg>
-                Overall View
+                Overall
               </a>
             </div>
           </div>
@@ -1590,13 +1487,10 @@
       <h2>The Stack</h2>
     </div>
 
-    <div class="skills-groups">
+    <div class="skills-grid">
 
       <div class="skill-group reveal">
-        <div class="skill-group-title">
-          <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-          Languages
-        </div>
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>Languages</div>
         <ul class="skill-list">
           <li class="skill-item">Python</li>
           <li class="skill-item">SQL (T-SQL / PostgreSQL)</li>
@@ -1607,62 +1501,71 @@
       </div>
 
       <div class="skill-group reveal reveal-delay-1">
-        <div class="skill-group-title">
-          <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-          ML / AI
-        </div>
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>ML / AI</div>
         <ul class="skill-list">
           <li class="skill-item">PyTorch</li>
           <li class="skill-item">TensorFlow / Keras</li>
           <li class="skill-item">Scikit-learn</li>
-          <li class="skill-item">HuggingFace Transformers</li>
+          <li class="skill-item">HuggingFace</li>
           <li class="skill-item">NLTK / spaCy</li>
         </ul>
       </div>
 
       <div class="skill-group reveal reveal-delay-2">
-        <div class="skill-group-title">
-          <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-          BI &amp; Visualisation
-        </div>
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>BI &amp; Visualisation</div>
         <ul class="skill-list">
           <li class="skill-item">Power BI</li>
           <li class="skill-item">Tableau</li>
           <li class="skill-item">Streamlit</li>
           <li class="skill-item">Matplotlib / Seaborn / Plotly</li>
+          <li class="skill-item">Excel (Charting &amp; Analysis)</li>
         </ul>
       </div>
 
       <div class="skill-group reveal reveal-delay-1">
-        <div class="skill-group-title">
-          <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-          Data &amp; Cloud
-        </div>
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>Data Services</div>
         <ul class="skill-list">
-          <li class="skill-item">Azure Databricks</li>
           <li class="skill-item">Microsoft SQL Server</li>
-          <li class="skill-item">Salesforce CRM Analytics</li>
+          <li class="skill-item">Azure Databricks</li>
+          <li class="skill-item">Google Cloud Platform (GCP)</li>
           <li class="skill-item">Pandas / NumPy / SciPy</li>
-          <li class="skill-item">Git / GitHub</li>
         </ul>
       </div>
 
       <div class="skill-group reveal reveal-delay-2">
-        <div class="skill-group-title">
-          <svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-          Domain Expertise
-        </div>
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>Software Exposure</div>
         <ul class="skill-list">
-          <li class="skill-item">Healthcare &amp; Digital Health</li>
-          <li class="skill-item">Utility Sector CX Analytics</li>
-          <li class="skill-item">Data Governance &amp; Privacy</li>
-          <li class="skill-item">Stakeholder Communication</li>
-          <li class="skill-item">Agile Delivery</li>
+          <li class="skill-item">Salesforce (CRM Analytics)</li>
+          <li class="skill-item">Microsoft 365 Suite</li>
+          <li class="skill-item">Git / GitHub</li>
         </ul>
       </div>
 
-      <!-- Cert row spanning all columns -->
-      <div class="skill-cert reveal reveal-delay-3">
+      <div class="skill-group reveal reveal-delay-3">
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>Soft Skills</div>
+        <ul class="skill-list">
+          <li class="skill-item">Stakeholder Communication</li>
+          <li class="skill-item">Requirements Gathering</li>
+          <li class="skill-item">Agile Delivery</li>
+          <li class="skill-item">Mentoring &amp; Knowledge Transfer</li>
+          <li class="skill-item">Analytical Problem-Solving</li>
+        </ul>
+      </div>
+
+      <!-- Domain — full width -->
+      <div class="skill-group full reveal">
+        <div class="skill-group-title"><svg class="star-sm" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>Domain Expertise</div>
+        <ul class="skill-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 24px;">
+          <li class="skill-item">Healthcare &amp; Digital Health</li>
+          <li class="skill-item">Utility Sector CX Analytics</li>
+          <li class="skill-item">Automotive Aftersales Analytics</li>
+          <li class="skill-item">Data Governance &amp; Privacy</li>
+          <li class="skill-item">Regulatory Compliance Reporting</li>
+        </ul>
+      </div>
+
+      <!-- Cert — full width -->
+      <div class="skill-cert reveal">
         <svg class="cert-icon" viewBox="0 0 24 24"><path d="M12 1l2.5 7.5H22l-6.5 4.5 2.5 7.5L12 16.5 6 20.5l2.5-7.5L2 8.5h7.5z"/></svg>
         <div class="cert-info">
           <strong>Microsoft Certified: Power BI Data Analyst Associate</strong>
@@ -1682,11 +1585,9 @@
   <div class="container">
     <div class="exp-edu-grid">
 
-      <!-- EXPERIENCE -->
       <div class="exp-col">
         <div class="section-label reveal">Experience</div>
         <h2 class="reveal">Where I've Worked</h2>
-
         <div class="timeline">
 
           <div class="timeline-item reveal">
@@ -1694,9 +1595,7 @@
             <div class="timeline-period">Nov 2025 — Present</div>
             <div class="timeline-role">Data Analyst (Analytics)</div>
             <div class="timeline-company">St John of God Health Care · Melbourne, VIC</div>
-            <div class="timeline-desc">
-              Supporting resource optimisation and organisational development through leave management analysis and capability reporting. Monitoring outpatient referral and visit data to track network-wide performance metrics. Partnering with HR and hospital administration stakeholders to deliver high-fidelity data products across the hospital network.
-            </div>
+            <div class="timeline-desc">Supporting resource optimisation and organisational development through leave management analysis and capability reporting. Monitoring outpatient referral and visit data to track network-wide performance. Partnering with HR and hospital administration stakeholders to deliver high-fidelity data products across the hospital network.</div>
           </div>
 
           <div class="timeline-item reveal reveal-delay-1">
@@ -1704,9 +1603,7 @@
             <div class="timeline-period">Sep 2024 — Oct 2025</div>
             <div class="timeline-role">Voice of Customer Data Scientist</div>
             <div class="timeline-company">South East Water · Frankston, VIC</div>
-            <div class="timeline-desc">
-              Led design and delivery of a Power BI CX Dashboard recognised by senior IT leadership as a governance model. Built a custom LSTM RNN for complaint driver extraction with PII scrubbing. Appointed data steward for customer data. Automated pipelines reducing manual effort by 60%. Made redundant due to organisational restructure.
-            </div>
+            <div class="timeline-desc">Led design and delivery of a Power BI CX Dashboard recognised by senior IT leadership as a governance model. Built a custom LSTM RNN for complaint driver extraction with PII scrubbing. Appointed data steward for customer data. Automated pipelines reducing manual effort by 60%. Made redundant due to organisational restructure.</div>
           </div>
 
           <div class="timeline-item reveal reveal-delay-2">
@@ -1714,19 +1611,15 @@
             <div class="timeline-period">May 2024 — Sep 2024</div>
             <div class="timeline-role">IBL Aftersales Performance Analytics Coordinator</div>
             <div class="timeline-company">Stellantis Australia &amp; New Zealand · Melbourne, VIC</div>
-            <div class="timeline-desc">
-              Delivered daily KPI insights to 50+ national dealership managers. Built Power BI dashboards and Excel/VBA tools, reducing manual reporting by 35%. Automated ETL workflows via Power Query, cutting preparation time by 40%.
-            </div>
+            <div class="timeline-desc">Delivered daily KPI insights to 50+ national managers. Built Power BI dashboards and Excel/VBA tools, reducing manual reporting by 35%. Automated ETL workflows via Power Query, cutting preparation time by 40%.</div>
           </div>
 
-          <!-- Clinical background condensed -->
           <div class="timeline-item reveal reveal-delay-3">
             <svg class="timeline-dot" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
             <div class="timeline-period">2022 — 2024</div>
             <div class="timeline-role">Clinical &amp; Community Care</div>
             <div class="timeline-company">Various Organisations · VIC</div>
-            <div class="timeline-desc">
-              A formative chapter in healthcare and community services that underpins the empathy and service-centred thinking brought to every data project today.
+            <div class="timeline-desc">A formative chapter that underpins the empathy and service-centred thinking brought to every data project.
               <div class="clinical-block">
                 <div class="cb-title">Roles held</div>
                 <div class="clinical-roles">
@@ -1737,15 +1630,12 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- EDUCATION -->
       <div class="edu-col">
         <div class="section-label reveal">Education</div>
         <h2 class="reveal">Academic Path</h2>
-
         <div class="timeline">
 
           <div class="timeline-item reveal">
@@ -1753,10 +1643,7 @@
             <div class="edu-degree">Master of Digital Health</div>
             <div class="edu-school">La Trobe University</div>
             <div class="edu-period">Feb 2026 — Current</div>
-            <span class="edu-badge">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.5 7.5H22l-6.5 4.5 2.5 7.5L12 16.5 6 20.5l2.5-7.5L2 8.5h7.5z"/></svg>
-              In Progress
-            </span>
+            <span class="edu-badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.5 7.5H22l-6.5 4.5 2.5 7.5L12 16.5 6 20.5l2.5-7.5L2 8.5h7.5z"/></svg>In Progress</span>
           </div>
 
           <div class="timeline-item reveal reveal-delay-1">
@@ -1777,16 +1664,14 @@
 
           <div class="timeline-item reveal reveal-delay-3">
             <svg class="timeline-dot" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
-            <div class="edu-degree">Bachelor of Nursing <span style="font-weight:500;opacity:0.6">(Partial)</span></div>
+            <div class="edu-degree">Bachelor of Nursing <span style="font-weight:500;opacity:0.55">(Partial)</span></div>
             <div class="edu-school">Deakin University</div>
             <div class="edu-period">Mar 2022 — Jul 2023</div>
             <span class="edu-badge">Intentional pivot to data</span>
           </div>
 
         </div>
-
-        <!-- Divider with star -->
-        <div class="star-divider" style="margin-top:48px;">
+        <div class="star-divider" style="margin-top:44px;">
           <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         </div>
       </div>
@@ -1824,7 +1709,7 @@
     <hr class="footer-divider" />
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Nicholas Dale. All rights reserved.</span>
-      <div class="footer-star-row">
+      <div style="display:flex;gap:8px;align-items:center;">
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
         <svg class="footer-star" viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
@@ -1838,88 +1723,135 @@
      JAVASCRIPT
 ============================================================ -->
 <script>
-  /* ---------- Dark Mode ---------- */
-  const toggle = document.getElementById('themeToggle');
-  const html   = document.documentElement;
+  /* ---------- Right-click / drag protection ---------- */
+  document.addEventListener('contextmenu', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+  document.addEventListener('dragstart', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
 
-  // Restore saved preference
+  /* ---------- Dark mode (both toggles in sync) ---------- */
+  const html = document.documentElement;
+  const toggles = [
+    document.getElementById('themeToggleFloat'),
+    document.getElementById('themeToggleMobile'),
+  ];
+
   const saved = localStorage.getItem('theme');
   if (saved) html.setAttribute('data-theme', saved);
 
-  toggle.addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+  toggles.forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
   });
 
-  /* ---------- Project Tab Switcher ---------- */
+  /* ---------- Project tab switcher ---------- */
   const tabBtns   = document.querySelectorAll('.tab-btn');
   const tabPanels = document.querySelectorAll('.tab-panel');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-
       tabBtns.forEach(b => b.classList.remove('active'));
       tabPanels.forEach(p => p.classList.remove('active'));
-
       btn.classList.add('active');
-      document.getElementById('panel-' + target).classList.add('active');
-
-      // Trigger reveal for newly visible cards
-      requestAnimationFrame(() => observeReveal());
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      requestAnimationFrame(observeReveal);
     });
   });
 
-  /* ---------- HuggingFace Space Lazy Loaders ---------- */
-  const HF_SPACES = {
+  /* ---------- HuggingFace lazy loaders ---------- */
+  const HF = {
     housing: 'https://equinox013-melbourne-housing-predictor.hf.space',
     waste:   'https://equinox013-smart-waste-classifier.hf.space',
     mental:  'https://equinox013-mental-health-transformer.hf.space',
     hikari:  'https://equinox013-hikari-complaint-classifier.hf.space',
   };
-
-  window.loadIframe = function(key) {
-    const iframe  = document.getElementById('iframe-' + key);
-    const overlay = document.getElementById('overlay-' + key);
-    iframe.src = HF_SPACES[key];
-    overlay.classList.add('hidden');
+  window.loadIframe = key => {
+    document.getElementById('iframe-' + key).src = HF[key];
+    document.getElementById('overlay-' + key).classList.add('hidden');
   };
 
-  /* ---------- Scroll Reveal (Intersection Observer) ---------- */
+  /* ---------- Photo carousel ---------- */
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots   = document.querySelectorAll('.carousel-dot');
+  let slideIdx = 0;
+  let slideTimer;
+
+  function goToSlide(n) {
+    slides[slideIdx].classList.remove('active');
+    dots[slideIdx].classList.remove('active');
+    slideIdx = (n + slides.length) % slides.length;
+    slides[slideIdx].classList.add('active');
+    dots[slideIdx].classList.add('active');
+  }
+
+  function startCarousel() {
+    slideTimer = setInterval(() => goToSlide(slideIdx + 1), 4500);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      clearInterval(slideTimer);
+      goToSlide(parseInt(dot.dataset.slide));
+      startCarousel();
+    });
+  });
+
+  startCarousel();
+
+  /* ---------- Quote / testimonial rotator ---------- */
+  const quotes   = document.querySelectorAll('.quote-item');
+  let quoteIdx   = 0;
+
+  setInterval(() => {
+    quotes[quoteIdx].classList.remove('active');
+    quoteIdx = (quoteIdx + 1) % quotes.length;
+    quotes[quoteIdx].classList.add('active');
+  }, 5200);
+
+  /* ---------- Scroll reveal ---------- */
   function observeReveal() {
     const els = document.querySelectorAll('.reveal:not(.visible)');
     if (!els.length) return;
-
-    const io = new IntersectionObserver((entries) => {
+    const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
-
+    }, { threshold: 0.1 });
     els.forEach(el => io.observe(el));
   }
-
   observeReveal();
 
-  /* ---------- Active Nav Link on Scroll ---------- */
+  /* ---------- Active nav link on scroll ---------- */
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const fnLinks  = document.querySelectorAll('.fn-links a');
 
-  const navIO = new IntersectionObserver((entries) => {
+  new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        navLinks.forEach(a => a.style.color = '');
-        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-        if (active) active.style.color = 'var(--text)';
+        fnLinks.forEach(a => a.classList.remove('active'));
+        const a = document.querySelector(`.fn-links a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
       }
     });
-  }, { rootMargin: '-40% 0px -55% 0px' });
+  }, { rootMargin: '-35% 0px -60% 0px' }).observe;
 
-  sections.forEach(s => navIO.observe(s));
+  sections.forEach(s => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          fnLinks.forEach(a => a.classList.remove('active'));
+          const a = document.querySelector(`.fn-links a[data-section="${e.target.id}"]`);
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-35% 0px -60% 0px' }).observe(s);
+  });
 </script>
 
 </body>
