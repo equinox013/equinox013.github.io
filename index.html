@@ -1062,7 +1062,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--bg);
+      color: #F5F0E8;
       border-radius: 2px;
       transition: background 0.2s, border-color 0.2s;
     }
@@ -1094,14 +1094,14 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
     /* ============================================================
-       SPOTIFY POPUP — anchored below the glass pill
+       SPOTIFY POPUP — anchored below the glass pill, L-shape layout
     ============================================================ */
     .spotify-popup {
       position: absolute;
-      left: 50%;
+      left: 0;                    /* left edge = left edge of pill → forms an L */
       top: calc(100% + 10px);
-      transform: translateX(-50%) translateY(-6px);
-      width: 310px;
+      transform: translateY(-8px);
+      width: 320px;
       background: var(--glass-bg);
       backdrop-filter: blur(22px) saturate(1.8);
       -webkit-backdrop-filter: blur(22px) saturate(1.8);
@@ -1117,7 +1117,7 @@
     .spotify-popup.open {
       opacity: 1;
       pointer-events: auto;
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
     }
     .sp-header {
       display: flex;
@@ -1147,7 +1147,7 @@
     .spotify-popup iframe {
       display: block;
       width: 100%;
-      height: 200px;
+      height: 232px;
       border: none;
       pointer-events: auto;
     }
@@ -1171,6 +1171,10 @@
     .fn-music.playing { border-color: var(--text); background: var(--tag-bg); }
 
     /* Footer easter egg */
+    @keyframes starDance {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-5px); }
+    }
     .footer-star-trigger {
       display: flex;
       gap: 8px;
@@ -1182,8 +1186,11 @@
       transition: opacity 0.3s;
     }
     .footer-star-trigger.activated .footer-star {
-      opacity: 0.7;
+      opacity: 0.85;
+      animation: starDance 0.65s ease-in-out infinite;
     }
+    .footer-star-trigger.activated .footer-star:nth-child(2) { animation-delay: 0.12s; }
+    .footer-star-trigger.activated .footer-star:nth-child(3) { animation-delay: 0.24s; }
     .footer-easter-text {
       font-size: 0.82rem;
       color: rgba(245,240,232,0.5);
@@ -1634,6 +1641,7 @@
           <li class="skill-item">PyTorch</li>
           <li class="skill-item">TensorFlow / Keras</li>
           <li class="skill-item">Scikit-learn</li>
+          <li class="skill-item">NumPy / SciPy</li>
           <li class="skill-item">HuggingFace</li>
           <li class="skill-item">NLTK / spaCy</li>
         </ul>
@@ -1657,7 +1665,6 @@
           <li class="skill-item">Microsoft SQL Server</li>
           <li class="skill-item">Azure Databricks</li>
           <li class="skill-item">Google Cloud Platform (GCP)</li>
-          <li class="skill-item">NumPy / SciPy</li>
         </ul>
       </div>
 
@@ -1917,7 +1924,7 @@
       easterTimer = setInterval(() => {
         easterIdx = (easterIdx + 1) % funFacts.length;
         showFact(easterIdx);
-      }, 15000);
+      }, 5000);
     } else {
       // Clicking again deactivates it
       easterActive = false;
