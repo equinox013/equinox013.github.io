@@ -1206,6 +1206,159 @@
     }
 
     /* ============================================================
+       FEATURED PROJECT
+    ============================================================ */
+    .featured-project {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      transition: box-shadow var(--transition), transform 0.22s;
+    }
+    .featured-project:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+
+    .featured-banner-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #F2EDE4;
+    }
+    .featured-banner-wrap img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 26 / 13;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .featured-badge svg { width: 10px; height: 10px; fill: currentColor; flex-shrink: 0; }
+
+    .featured-body {
+      padding: 26px 28px 28px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .featured-info { flex: 1; min-width: 260px; }
+    .featured-info h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .featured-subheader {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .featured-hook {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .featured-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .nikko-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.4;
+      flex-shrink: 0;
+      transition: background 0.4s, opacity 0.4s, box-shadow 0.4s;
+    }
+    .nikko-dot.active   { background: #3CB96A; opacity: 1; box-shadow: 0 0 0 3px rgba(60,185,106,0.2); }
+    .nikko-dot.inactive { background: #D9534F; opacity: 1; box-shadow: 0 0 0 3px rgba(217,83,79,0.15); }
+
+    .nikko-status-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 220px;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+      padding-top: 4px;
+    }
+
+    .featured-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--text);
+      color: var(--bg);
+      border: 1.5px solid var(--text);
+      padding: 10px 22px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background var(--transition), color var(--transition), transform 0.2s;
+    }
+    .featured-cta:hover { background: transparent; color: var(--text); transform: translateY(-2px); }
+    .featured-cta svg { width: 13px; height: 13px; fill: currentColor; }
+
+    .featured-cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1.5px solid var(--border-bold);
+      padding: 10px 22px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: none;
+      color: var(--text);
+      border-radius: 2px;
+      transition: background var(--transition), color var(--transition), transform 0.2s;
+    }
+    .featured-cta-ghost:hover { background: var(--text); color: var(--bg); transform: translateY(-2px); }
+    .featured-cta-ghost svg { width: 13px; height: 13px; fill: currentColor; }
+
+    /* ============================================================
        RESPONSIVE
     ============================================================ */
     @media (max-width: 960px) {
@@ -1455,6 +1608,38 @@
 
     <!-- DATA SCIENCE -->
     <div class="tab-panel active" id="panel-ds">
+
+      <!-- NIKKO — FEATURED PROJECT -->
+      <div class="featured-project reveal">
+        <div class="featured-banner-wrap">
+          <img src="assets/nikko-banner.png" alt="Nikko — Safety-aligned agentic mental wellbeing companion" />
+          <div class="featured-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg>
+            Featured Project
+          </div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-info">
+            <p class="featured-subheader">A safety-aligned agentic mental wellbeing companion.</p>
+            <p class="featured-hook">Nikko listens without judgment, draws on peer-reviewed research and clinical guidelines, and always points you toward real human support when it matters most.</p>
+            <p class="featured-hook">Seven specialist agents govern every response — crisis-routing deterministically, grounding answers in peer-reviewed evidence, and evaluating output quality before anything reaches you.</p>
+          </div>
+          <div class="featured-actions">
+            <div class="featured-cta-group">
+              <a class="featured-cta" id="nikko-cta" href="https://equinox013.github.io/nikko-companion/Nikko.html" target="_blank" rel="noopener">
+                <span class="nikko-dot" id="nikko-dot"></span>
+                Open Nikko
+              </a>
+              <p class="nikko-status-text" id="nikko-status-text">Checking status…</p>
+            </div>
+            <a class="featured-cta-ghost" href="https://github.com/equinox013/nikko-companion" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="ds-grid">
 
         <div class="project-card reveal">
@@ -1865,6 +2050,27 @@
      JAVASCRIPT
 ============================================================ -->
 <script>
+  /* ---------- Nikko health check ---------- */
+  (function () {
+    const dot  = document.getElementById('nikko-dot');
+    const text = document.getElementById('nikko-status-text');
+    if (!dot || !text) return;
+
+    fetch('https://nikko-companion.onrender.com/health', { method: 'GET', cache: 'no-store' })
+      .then(r => {
+        if (r.ok) {
+          dot.classList.add('active');
+          text.textContent = "Nikko is active — it shouldn't take too long to load.";
+        } else {
+          throw new Error('non-ok');
+        }
+      })
+      .catch(() => {
+        dot.classList.add('inactive');
+        text.textContent = 'Nikko is inactive — perhaps an upgrade is coming?';
+      });
+  })();
+
   /* ---------- Spotify player ---------- */
   const SPOTIFY_SRC = 'https://open.spotify.com/embed/playlist/37i9dQZF1FwPnI2WdkZqpZ?utm_source=generator&theme=0';
   const musicBtn    = document.getElementById('musicToggle');
