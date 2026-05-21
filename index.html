@@ -287,13 +287,37 @@
     .mn-links a:hover { color: var(--text); }
 
     /* Responsive nav switch */
-    @media (max-width: 1299px) {
+    @media (max-width: 1023px) {
       #float-nav  { display: none; }
       #mobile-nav { display: block; }
     }
-    @media (min-width: 1300px) {
+    @media (min-width: 1024px) {
       #float-nav  { display: flex; }
       #mobile-nav { display: none; }
+    }
+
+    /* Compact pill for 1024px–1299px small-desktop range */
+    @media (min-width: 1024px) and (max-width: 1299px) {
+      #float-nav {
+        left: 14px;
+        padding: 16px 10px;
+        gap: 13px;
+        border-radius: 40px;
+      }
+      .fn-logo            { width: 28px; height: 28px; }
+      .fn-logo img        { width: 24px; height: 24px; }
+      .fn-sep             { width: 22px; }
+      .fn-links           { gap: 3px; }
+      .fn-links a         { font-size: 0.54rem; padding: 5px 7px; letter-spacing: 0.15em; }
+      .fn-toggle,
+      .fn-music           { width: 28px; height: 28px; }
+      .fn-toggle svg,
+      .fn-music svg       { width: 12px; height: 12px; }
+    }
+
+    /* At 1024–1199px the container has no auto-margin, so shift it right to clear the pill */
+    @media (min-width: 1024px) and (max-width: 1199px) {
+      .container { padding-left: 80px; }
     }
 
     /* ============================================================
@@ -441,7 +465,8 @@
     .carousel-track {
       position: relative;
       width: 100%;
-      aspect-ratio: 3/4;
+      height: 0;
+      padding-top: 133.33%; /* 4:3 ratio — padding-top % is relative to width, ensures overflow:hidden clips slides cross-browser */
       border-radius: 2px;
       overflow: hidden;
       z-index: 1;
@@ -1170,6 +1195,13 @@
     .fn-music svg { width: 14px; height: 14px; fill: currentColor; }
     .fn-music.playing { border-color: var(--text); background: var(--tag-bg); }
 
+    /* Popup re-anchored to mobile nav bar instead of the pill */
+    .spotify-popup.mn-anchored {
+      position: fixed;
+      top: 68px;
+      left: 16px;
+    }
+
     /* Footer easter egg */
     @keyframes starDance {
       0%, 100% { transform: translateY(0); }
@@ -1359,12 +1391,99 @@
     .featured-cta-ghost svg { width: 13px; height: 13px; fill: currentColor; }
 
     /* ============================================================
+       MOBILE HAMBURGER + DRAWER
+    ============================================================ */
+    .mn-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .mn-hamburger {
+      display: none;
+      background: none;
+      border: 1.5px solid var(--border-bold);
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+    .mn-hamburger:hover { background: var(--tag-bg); }
+    .mn-hamburger svg {
+      width: 16px; height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ham-open  { display: block; }
+    .ham-close { display: none; }
+    .mn-hamburger.open .ham-open  { display: none; }
+    .mn-hamburger.open .ham-close { display: block; }
+
+    #mn-drawer {
+      position: fixed;
+      top: 58px;
+      left: 0; right: 0;
+      z-index: 199;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 4px 0 8px;
+      display: none;
+      transition: background var(--transition);
+    }
+    #mn-drawer.open { display: block; }
+    .mn-drawer-links {
+      list-style: none;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .mn-drawer-links li { border-bottom: 1px solid var(--border); }
+    .mn-drawer-links li:last-child { border-bottom: none; }
+    .mn-drawer-links a {
+      display: block;
+      padding: 12px 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .mn-drawer-links a:hover { color: var(--text); }
+
+    /* ============================================================
        RESPONSIVE
     ============================================================ */
+    /* Mobile nav is fixed at top — push hero content below it */
+    @media (max-width: 1023px) {
+      #hero { padding-top: 80px; }
+      section { scroll-margin-top: 68px; }
+    }
+
     @media (max-width: 960px) {
       .hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero-right { order: -1; }
       .hero-carousel { width: 260px; }
+      /* Centre the floating tag under the single-column carousel */
+      .carousel-tag {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -44px;
+        white-space: nowrap;
+      }
       .about-grid { grid-template-columns: 1fr; gap: 44px; }
       .skills-grid { grid-template-columns: 1fr 1fr; }
       .skills-grid .skill-group.full,
@@ -1372,15 +1491,30 @@
       .exp-edu-grid { grid-template-columns: 1fr; gap: 52px; }
       .ds-grid { grid-template-columns: 1fr; }
       .da-card { grid-template-columns: 1fr; gap: 14px; }
-      .mn-links { display: none; }
+      /* Hide inline links; hamburger takes over */
+      .mn-links     { display: none; }
+      .mn-hamburger { display: flex; }
     }
+
     @media (max-width: 600px) {
       .container { padding: 0 18px; }
       section { padding: 72px 0; }
       .skills-grid { grid-template-columns: 1fr; }
       .hero-name { font-size: 2.8rem; }
+      .hero-carousel { width: 220px; }
+      /* Quote rotator — give extra height so wrapped testimonial text isn't clipped */
+      .quote-rotator { height: 170px; }
       .projects-header { flex-direction: column; align-items: flex-start; }
+      .featured-body { flex-direction: column; }
+      .da-card { padding: 20px 18px; }
       .footer-top { flex-direction: column; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-name { font-size: 2.4rem; }
+      .hero-carousel { width: 190px; }
+      .social-btn { padding: 8px 13px; font-size: 0.66rem; }
+      .tab-btn { padding: 8px 12px; font-size: 0.62rem; }
     }
   </style>
 </head>
@@ -1440,11 +1574,34 @@
       <li><a href="#skills">Stack</a></li>
       <li><a href="#experience">Story</a></li>
     </ul>
-    <button class="fn-toggle" id="themeToggleMobile" aria-label="Toggle dark mode" style="margin-left:auto;">
-      <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
-    </button>
+    <div class="mn-right">
+      <button class="fn-music" id="musicToggleMobile" aria-label="Toggle music">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+      <button class="mn-hamburger" id="mnHamburger" aria-label="Open navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24">
+          <path class="ham-open"  d="M3 6h18M3 12h18M3 18h18"/>
+          <path class="ham-close" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <button class="fn-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+        <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
+    </div>
   </div>
+</nav>
+
+<!-- MOBILE NAV DRAWER -->
+<nav id="mn-drawer" aria-label="Mobile navigation menu">
+  <ul class="mn-drawer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#skills">Stack</a></li>
+    <li><a href="#experience">Story</a></li>
+  </ul>
 </nav>
 
 
@@ -2072,29 +2229,39 @@
   })();
 
   /* ---------- Spotify player ---------- */
-  const SPOTIFY_SRC = 'https://open.spotify.com/embed/playlist/37i9dQZF1FwPnI2WdkZqpZ?utm_source=generator&theme=0';
-  const musicBtn    = document.getElementById('musicToggle');
-  const spotifyPop  = document.getElementById('spotifyPopup');
-  const spotifyIf   = document.getElementById('spotifyIframe');
-  const spotifyClose= document.getElementById('spotifyClose');
+  const SPOTIFY_SRC      = 'https://open.spotify.com/embed/playlist/37i9dQZF1FwPnI2WdkZqpZ?utm_source=generator&theme=0';
+  const musicBtn         = document.getElementById('musicToggle');
+  const musicBtnMobile   = document.getElementById('musicToggleMobile');
+  const spotifyPop       = document.getElementById('spotifyPopup');
+  const spotifyIf        = document.getElementById('spotifyIframe');
+  const spotifyClose     = document.getElementById('spotifyClose');
   let spotifyLoaded = false;
   let spotifyOpen   = false;
 
-  function toggleSpotify() {
+  function setMusicPlaying(on) {
+    if (musicBtn)       musicBtn.classList.toggle('playing', on);
+    if (musicBtnMobile) musicBtnMobile.classList.toggle('playing', on);
+  }
+
+  function toggleSpotify(fromMobile) {
     spotifyOpen = !spotifyOpen;
+    // Reposition popup depending on which nav triggered it
+    spotifyPop.classList.toggle('mn-anchored', !!fromMobile);
     spotifyPop.classList.toggle('open', spotifyOpen);
-    musicBtn.classList.toggle('playing', spotifyOpen);
+    setMusicPlaying(spotifyOpen);
     if (spotifyOpen && !spotifyLoaded) {
       spotifyIf.src = SPOTIFY_SRC;
       spotifyLoaded = true;
     }
   }
 
-  musicBtn.addEventListener('click', toggleSpotify);
+  if (musicBtn)       musicBtn.addEventListener('click',       () => toggleSpotify(false));
+  if (musicBtnMobile) musicBtnMobile.addEventListener('click', () => toggleSpotify(true));
+
   spotifyClose.addEventListener('click', () => {
     spotifyOpen = false;
     spotifyPop.classList.remove('open');
-    musicBtn.classList.remove('playing');
+    setMusicPlaying(false);
   });
 
   /* ---------- Footer easter egg ---------- */
@@ -2277,6 +2444,25 @@
       });
     }, { rootMargin: '-35% 0px -60% 0px' }).observe(s);
   });
+
+  /* ---------- Mobile hamburger ---------- */
+  const mnHam    = document.getElementById('mnHamburger');
+  const mnDrawer = document.getElementById('mn-drawer');
+  if (mnHam && mnDrawer) {
+    mnHam.addEventListener('click', () => {
+      const isOpen = mnHam.classList.toggle('open');
+      mnDrawer.classList.toggle('open', isOpen);
+      mnHam.setAttribute('aria-expanded', String(isOpen));
+    });
+    // Close drawer when a link is tapped
+    mnDrawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mnHam.classList.remove('open');
+        mnDrawer.classList.remove('open');
+        mnHam.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 </script>
 
 </body>
