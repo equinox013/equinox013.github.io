@@ -1122,10 +1122,10 @@
        SPOTIFY POPUP — anchored below the glass pill, L-shape layout
     ============================================================ */
     .spotify-popup {
-      position: absolute;
-      left: 0;                    /* left edge = left edge of pill → forms an L */
-      top: calc(100% + 10px);
-      transform: translateY(-8px);
+      position: fixed;
+      left: 90px;    /* desktop: just to the right of the pill */
+      bottom: 24px;  /* anchored to the bottom of the viewport */
+      transform: translateY(8px); /* slides up on open */
       width: 320px;
       background: var(--glass-bg);
       backdrop-filter: blur(22px) saturate(1.8);
@@ -1195,11 +1195,15 @@
     .fn-music svg { width: 14px; height: 14px; fill: currentColor; }
     .fn-music.playing { border-color: var(--text); background: var(--tag-bg); }
 
-    /* Popup re-anchored to mobile nav bar instead of the pill */
+    /* Popup re-anchored below the mobile nav bar */
     .spotify-popup.mn-anchored {
-      position: fixed;
-      top: 68px;
       left: 16px;
+      bottom: auto;
+      top: 68px;
+      transform: translateY(-8px); /* slides down on open */
+    }
+    .spotify-popup.mn-anchored.open {
+      transform: translateY(0);
     }
 
     /* Footer easter egg */
@@ -1546,21 +1550,22 @@
     </svg>
   </button>
 
-  <!-- SPOTIFY POPUP — lives inside pill so it anchors below naturally -->
-  <div class="spotify-popup" id="spotifyPopup">
-    <div class="sp-header">
-      <span class="sp-label">Now Playing</span>
-      <button class="sp-close" id="spotifyClose" aria-label="Close player">✕</button>
-    </div>
-    <iframe
-      id="spotifyIframe"
-      src=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-      title="Spotify Player">
-    </iframe>
-  </div>
 </nav>
+
+<!-- SPOTIFY POPUP — standalone so it's never hidden by display:none on either nav -->
+<div class="spotify-popup" id="spotifyPopup">
+  <div class="sp-header">
+    <span class="sp-label">Now Playing</span>
+    <button class="sp-close" id="spotifyClose" aria-label="Close player">✕</button>
+  </div>
+  <iframe
+    id="spotifyIframe"
+    src=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"
+    title="Spotify Player">
+  </iframe>
+</div>
 
 <!-- MOBILE NAV FALLBACK -->
 <nav id="mobile-nav" aria-label="Mobile navigation">
@@ -1580,15 +1585,15 @@
           <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
       </button>
+      <button class="fn-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+        <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
       <button class="mn-hamburger" id="mnHamburger" aria-label="Open navigation" aria-expanded="false">
         <svg viewBox="0 0 24 24">
           <path class="ham-open"  d="M3 6h18M3 12h18M3 18h18"/>
           <path class="ham-close" d="M6 6l12 12M18 6L6 18"/>
         </svg>
-      </button>
-      <button class="fn-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
-        <svg class="icon-sun"  viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8-5a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm11.95-4.95a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM7.757 16.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm9.9 1.414a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM7.757 7.757a1 1 0 0 1-1.414 0l-.707-.707A1 1 0 1 1 7.05 5.636l.707.707a1 1 0 0 1 0 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
       </button>
     </div>
   </div>
