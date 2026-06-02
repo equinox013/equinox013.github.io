@@ -1123,9 +1123,9 @@
     ============================================================ */
     .spotify-popup {
       position: fixed;
-      left: 90px;    /* desktop: just to the right of the pill */
-      bottom: 24px;  /* anchored to the bottom of the viewport */
-      transform: translateY(8px); /* slides up on open */
+      left: 24px;    /* aligned with the pill; top is set dynamically via JS */
+      top: 60vh;     /* fallback — overridden by JS on open */
+      transform: translateY(-8px); /* slides down on open */
       width: 320px;
       background: var(--glass-bg);
       backdrop-filter: blur(22px) saturate(1.8);
@@ -1647,6 +1647,14 @@
             <blockquote>"What took me 5 hours to make, the dashboard now makes within seconds."</blockquote>
             <cite>— Product Owner, South East Water</cite>
           </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"Nicholas has made fantastic progress since joining the team. He has a very organised and detail-oriented approach, always willing to help out and support those around him. He also has very strong data science and data analytics skills."</blockquote>
+            <cite>— People Manager, St John of God Health Care</cite>
+          </div>
+          <div class="quote-item quote-testimonial">
+            <blockquote>"Nicholas has been a major contributor to the analytics team; he has worked very diligently over the last 8 months. He exemplifies the team's values every day."</blockquote>
+            <cite>— Analytics Lead, St John of God Health Care</cite>
+          </div>
         </div>
 
         <div class="hero-socials">
@@ -1994,7 +2002,10 @@
           <li class="skill-item">TensorFlow / Keras</li>
           <li class="skill-item">Scikit-learn</li>
           <li class="skill-item">NumPy / SciPy</li>
-          <li class="skill-item">HuggingFace</li>
+          <li class="skill-item">HuggingFace Transformers</li>
+          <li class="skill-item">PEFT / QLoRA Fine-tuning</li>
+          <li class="skill-item">Multi-Agent LLM Pipelines</li>
+          <li class="skill-item">RAG & Evidence Retrieval</li>
           <li class="skill-item">NLTK / spaCy</li>
         </ul>
       </div>
@@ -2252,6 +2263,15 @@
     spotifyOpen = !spotifyOpen;
     // Reposition popup depending on which nav triggered it
     spotifyPop.classList.toggle('mn-anchored', !!fromMobile);
+    // Desktop: snap popup directly below the pill to form an L-shape
+    if (!fromMobile && spotifyOpen) {
+      const pill = document.getElementById('float-nav');
+      if (pill) {
+        const rect = pill.getBoundingClientRect();
+        spotifyPop.style.top  = (rect.bottom + 12) + 'px';
+        spotifyPop.style.left = rect.left + 'px';
+      }
+    }
     spotifyPop.classList.toggle('open', spotifyOpen);
     setMusicPlaying(spotifyOpen);
     if (spotifyOpen && !spotifyLoaded) {
